@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 每日晨报</title>
+<style>
+  :root {
+    --bg: #0f1220; --bg2: #151a2e; --card: #1b2238; --border: #2a3358;
+    --text: #e8ecf6; --muted: #9aa6c4; --accent: #6ea8fe; --accent2: #b07cff;
+    --ok: #57d9a3;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: linear-gradient(160deg, var(--bg), var(--bg2));
+    color: var(--text); display: flex; flex-direction: column; height: 100vh; overflow: hidden;
+  }
+  header {
+    display: flex; align-items: center; gap: 14px; padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+    background: radial-gradient(900px 200px at 0% -50px, rgba(110,168,254,.18), transparent);
+  }
+  .brand { font-weight: 800; font-size: 18px; letter-spacing: .5px;
+    background: linear-gradient(90deg, #fff, var(--accent) 60%, var(--accent2));
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  .brand small { -webkit-text-fill-color: var(--muted); color: var(--muted); font-weight: 500; font-size: 12px; margin-left: 6px; }
+  .viewing { color: var(--muted); font-size: 14px; }
+  .viewing b { color: var(--accent); }
+  .spacer { flex: 1; }
+  button {
+    font: inherit; cursor: pointer; border: 1px solid var(--border); color: var(--text);
+    background: var(--card); padding: 8px 14px; border-radius: 999px; font-size: 13px; transition: .15s;
+  }
+  button:hover { border-color: var(--accent); }
+  button.primary { background: linear-gradient(90deg, var(--accent), var(--accent2)); color: #0b0e1a; border: none; font-weight: 700; }
+
+  .layout { flex: 1; display: flex; min-height: 0; }
+  /* Calendar panel */
+  #calPanel {
+    width: 320px; flex-shrink: 0; border-right: 1px solid var(--border);
+    padding: 16px; overflow-y: auto; transition: margin-left .25s ease;
+  }
+  #calPanel.collapsed { margin-left: -320px; }
+  .cal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+  .cal-head .mon { font-weight: 800; font-size: 16px; }
+  .cal-nav { display: flex; gap: 6px; }
+  .cal-nav button { padding: 4px 10px; }
+  .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+  .cal-dow { text-align: center; font-size: 12px; color: var(--muted); padding: 6px 0; }
+  .cal-cell {
+    aspect-ratio: 1 / 1; display: flex; align-items: center; justify-content: center;
+    border-radius: 10px; font-size: 13px; color: var(--muted); border: 1px solid transparent;
+  }
+  .cal-cell.empty { visibility: hidden; }
+  .cal-cell.has {
+    color: var(--text); cursor: pointer; background: var(--card); border-color: var(--border); font-weight: 700;
+  }
+  .cal-cell.has:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .cal-cell.has .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--ok); position: absolute; margin-top: 18px; }
+  .cal-cell.sel { background: linear-gradient(90deg, var(--accent), var(--accent2)); color: #0b0e1a; border: none; }
+  .cal-cell.today { box-shadow: 0 0 0 2px var(--accent2) inset; }
+  .cal-hint { margin-top: 14px; font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .cal-hint a { color: var(--accent); text-decoration: none; }
+
+  /* Report frame */
+  #frame { flex: 1; border: none; width: 100%; height: 100%; background: var(--bg); }
+
+  @media (max-width: 760px) {
+    #calPanel { position: absolute; z-index: 20; background: var(--bg2); height: 100%; box-shadow: 0 0 30px rgba(0,0,0,.5); }
+    #calPanel.collapsed { margin-left: -320px; }
+  }
+</style>
+</head>
+<body>
+  <header>
+    <span class="brand">📰 AI 每日晨报<small>GitHub Pages</small></span>
+    <span class="viewing">当前查看：<b id="viewDate">—</b></span>
+    <span class="spacer"></span>
+    <button id="todayBtn">回到今天</button>
+    <button id="calBtn" class="primary">📅 日历</button>
+  </header>
+
+  <div class="layout">
+    <aside id="calPanel">
+      <div class="cal-head">
+        <span class="mon" id="calMon">—</span>
+        <span class="cal-nav">
+          <button id="prevBtn">‹</button>
+          <button id="nextBtn">›</button>
+        </span>
+      </div>
+      <div class="cal-grid" id="calGrid"></div>
+      <div class="cal-hint">
+        高亮日期表示已有当日晨报，点击即可查看。<br>
+        数据来源：<a href="https://aihot.virxact.com" target="_blank" rel="noopener noreferrer">AI HOT</a> 公开 API。
+      </div>
+    </aside>
+    <iframe id="frame" title="晨报内容" src="reports/2026-08-12.html"></iframe>
+  </div>
+
+  <script>
+  (function () {
+    var frame = document.getElementById('frame');
+    var viewDate = document.getElementById('viewDate');
+    var calPanel = document.getElementById('calPanel');
+    var calGrid = document.getElementById('calGrid');
+    var calMon = document.getElementById('calMon');
+
+    var DATA = { latest: null, dates: [] };
+    var dateSet = {};
+    var cur = new Date();          // month being viewed
+    var todayStr = fmt(new Date());
+    var selected = null;
+
+    var DOW = ['日','一','二','三','四','五','六'];
+
+    function fmt(d) {
+      var y = d.getFullYear();
+      var m = ('0' + (d.getMonth() + 1)).slice(-2);
+      var day = ('0' + d.getDate()).slice(-2);
+      return y + '-' + m + '-' + day;
+    }
+    function parse(s) { var p = s.split('-'); return new Date(+p[0], +p[1]-1, +p[2]); }
+
+    function load(dateStr) {
+      selected = dateStr;
+      frame.src = 'reports/' + dateStr + '.html';
+      viewDate.textContent = dateStr;
+      render();
+    }
+
+    function render() {
+      calGrid.innerHTML = '';
+      for (var i = 0; i < 7; i++) {
+        var d = document.createElement('div');
+        d.className = 'cal-dow'; d.textContent = DOW[i]; calGrid.appendChild(d);
+      }
+      var y = cur.getFullYear(), m = cur.getMonth();
+      calMon.textContent = y + ' 年 ' + (m + 1) + ' 月';
+      var first = new Date(y, m, 1);
+      var startDow = first.getDay();
+      var daysInMonth = new Date(y, m + 1, 0).getDate();
+      for (var i = 0; i < startDow; i++) {
+        var e = document.createElement('div'); e.className = 'cal-cell empty'; calGrid.appendChild(e);
+      }
+      for (var d = 1; d <= daysInMonth; d++) {
+        var cell = document.createElement('div');
+        cell.className = 'cal-cell';
+        cell.textContent = d;
+        var ds = fmt(new Date(y, m, d));
+        if (dateSet[ds]) {
+          cell.classList.add('has');
+          (function (ds) { cell.onclick = function () { load(ds); }; })(ds);
+        }
+        if (ds === todayStr) cell.classList.add('today');
+        if (ds === selected) cell.classList.add('sel');
+        calGrid.appendChild(cell);
+      }
+    }
+
+    document.getElementById('prevBtn').onclick = function () { cur = new Date(cur.getFullYear(), cur.getMonth()-1, 1); render(); };
+    document.getElementById('nextBtn').onclick = function () { cur = new Date(cur.getFullYear(), cur.getMonth()+1, 1); render(); };
+    document.getElementById('todayBtn').onclick = function () {
+      var t = dateSet[todayStr] ? todayStr : DATA.latest;
+      if (t) { cur = parse(t); load(t); }
+    };
+    document.getElementById('calBtn').onclick = function () { calPanel.classList.toggle('collapsed'); };
+
+    fetch('data/index.json', { cache: 'no-cache' })
+      .then(function (r) { return r.json(); })
+      .then(function (j) {
+        DATA = j; DATA.dates.forEach(function (d) { dateSet[d] = true; });
+        var init = dateSet[todayStr] ? todayStr : DATA.latest;
+        if (init) { cur = parse(init); load(init); }
+        else { viewDate.textContent = '暂无报告'; }
+      })
+      .catch(function (e) {
+        viewDate.textContent = '索引加载失败';
+        console.error(e);
+      });
+  })();
+  </script>
+</body>
+</html>
