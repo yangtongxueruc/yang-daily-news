@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 日报晨报 · 2026年08月12日</title>
+<style>
+  :root {
+    --bg: #0f1220;
+    --bg2: #151a2e;
+    --card: #1b2238;
+    --card-hover: #222b48;
+    --text: #e8ecf6;
+    --muted: #9aa6c4;
+    --accent: #6ea8fe;
+    --accent2: #b07cff;
+    --chip: #2a3358;
+    --border: #2a3358;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: linear-gradient(160deg, var(--bg), var(--bg2));
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+    padding: 0 0 60px;
+  }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 20px; }
+  /* Hero */
+  .hero {
+    text-align: center;
+    padding: 54px 20px 40px;
+    background: radial-gradient(1200px 400px at 50% -120px, rgba(110,168,254,.22), transparent),
+                radial-gradient(900px 360px at 80% 0, rgba(176,124,255,.18), transparent);
+    border-bottom: 1px solid var(--border);
+  }
+  .hero .kicker {
+    letter-spacing: 4px; font-size: 13px; color: var(--accent);
+    text-transform: uppercase; font-weight: 700;
+  }
+  .hero h1 {
+    font-size: clamp(28px, 5vw, 46px); font-weight: 800; margin: 10px 0 6px;
+    background: linear-gradient(90deg, #fff, var(--accent) 60%, var(--accent2));
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .hero .date-line { color: var(--muted); font-size: 16px; }
+  .hero .total-badge {
+    display: inline-block; margin-top: 16px; padding: 10px 22px; border-radius: 999px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    color: #0b0e1a; font-weight: 800; font-size: 18px;
+  }
+  .hero .window-label { margin-top: 10px; color: var(--muted); font-size: 13px; }
+  /* Stat cards */
+  .stats { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin: 30px 0 10px; }
+  .stat-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+    padding: 18px 12px; text-align: center;
+  }
+  .stat-num { font-size: 30px; font-weight: 800; color: var(--accent); }
+  .stat-label { font-size: 13px; color: var(--muted); margin-top: 4px; }
+  /* Nav */
+  .nav { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 26px 0 6px; position: sticky; top: 0; z-index: 10; padding: 12px 0; backdrop-filter: blur(8px); }
+  .nav-chip {
+    display: inline-flex; align-items: center; gap: 8px; text-decoration: none;
+    background: var(--card); color: var(--text); border: 1px solid var(--border);
+    padding: 8px 14px; border-radius: 999px; font-size: 14px; transition: .2s;
+  }
+  .nav-chip:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .nav-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+  .nav-chip b { color: var(--accent); }
+  /* Sections */
+  .section { margin: 40px 0; }
+  .section-title {
+    display: flex; align-items: center; gap: 12px; font-size: 22px; font-weight: 800;
+    margin-bottom: 18px; scroll-margin-top: 70px;
+  }
+  .section-bar { width: 6px; height: 24px; border-radius: 4px; background: linear-gradient(var(--accent), var(--accent2)); }
+  .section-count { font-size: 14px; color: var(--muted); font-weight: 600; }
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 18px; }
+  .card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+    padding: 18px; display: flex; flex-direction: column; gap: 10px; transition: .2s;
+  }
+  .card:hover { background: var(--card-hover); transform: translateY(-3px); border-color: var(--accent); }
+  .card-head { display: flex; align-items: center; justify-content: space-between; }
+  .card-num {
+    font-weight: 800; color: var(--accent); font-size: 15px;
+    background: var(--chip); padding: 2px 10px; border-radius: 8px;
+  }
+  .src-chip {
+    font-size: 12px; color: var(--muted); background: var(--chip);
+    padding: 4px 10px; border-radius: 999px; border: 1px solid var(--border);
+    max-width: 70%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .card-title { font-size: 17px; line-height: 1.45; }
+  .card-title a { color: var(--text); text-decoration: none; }
+  .card-title a:hover { color: var(--accent); }
+  .card-summary { color: var(--muted); font-size: 14px; flex: 1; }
+  .card-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 12px; }
+  .card-time { color: var(--muted); }
+  .card-link { color: var(--accent); text-decoration: none; white-space: nowrap; font-weight: 600; }
+  .card-link:hover { text-decoration: underline; }
+  /* Footer */
+  .foot { margin-top: 50px; padding-top: 24px; border-top: 1px solid var(--border); color: var(--muted); font-size: 13px; text-align: center; }
+  .foot a { color: var(--accent); text-decoration: none; }
+  @media (max-width: 760px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .hero { padding: 40px 16px 30px; }
+  }
+</style>
+</head>
+<body>
+  <header class="hero">
+    <div class="kicker">AI HOT · 每日晨报</div>
+    <h1>AI 日报仪表盘</h1>
+    <div class="date-line">2026年08月12日 · 星期三</div>
+    <div class="total-badge">今日共 24 条</div>
+    <div class="window-label">数据范围：过去 24 小时 · 数据源：AI HOT (aihot.virxact.com)</div>
+  </header>
+
+  <div class="wrap">
+    <div class="stats">
+      <div class="stat-card"><div class="stat-num">3</div><div class="stat-label">模型发布/更新</div></div><div class="stat-card"><div class="stat-num">4</div><div class="stat-label">产品发布/更新</div></div><div class="stat-card"><div class="stat-num">5</div><div class="stat-label">行业动态</div></div><div class="stat-card"><div class="stat-num">5</div><div class="stat-label">论文研究</div></div><div class="stat-card"><div class="stat-num">7</div><div class="stat-label">技巧与观点</div></div>
+    </div>
+
+    <nav class="nav">
+      <a class="nav-chip" href="#sec-0"><span class="nav-dot"></span>模型发布/更新<b>3</b></a><a class="nav-chip" href="#sec-1"><span class="nav-dot"></span>产品发布/更新<b>4</b></a><a class="nav-chip" href="#sec-2"><span class="nav-dot"></span>行业动态<b>5</b></a><a class="nav-chip" href="#sec-3"><span class="nav-dot"></span>论文研究<b>5</b></a><a class="nav-chip" href="#sec-4"><span class="nav-dot"></span>技巧与观点<b>7</b></a>
+    </nav>
+
+    <section class="section" id="sec-0">
+  <h2 class="section-title"><span class="section-bar"></span>模型发布/更新 <span class="section-count">3</span></h2>
+  <div class="card-grid"><article class="card">
+  <div class="card-head">
+    <span class="card-num">#1</span>
+    <span class="src-chip">LMSYS：Blog（Chatbot Arena 团队）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmsopyoum028urohdhqzve6ba" target="_blank" rel="noopener noreferrer">SGLang 宣布 Day-0 支持 NVIDIA Nemotron 3.5 Lightning</a></h3>
+  <p class="card-summary">SGLang 宣布对 NVIDIA Nemotron 3.5 Lightning 提供 Day-0 支持，该开源模型为 30B 总参数、3B 激活参数的混合专家架构，支持最长…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月11日 21:51</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmsopyoum028urohdhqzve6ba" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#2</span>
+    <span class="src-chip">NVIDIA Blog（RSS）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmsoolxde07isrop2eb5rrtvq" target="_blank" rel="noopener noreferrer">NVIDIA 推出 Nemotron 3.5 Lightning，加速本地智能体任务</a></h3>
+  <p class="card-summary">NVIDIA 发布 Nemotron 3.5 Lightning，一款可定制的开源 30B 混合专家（MoE）模型，专为常驻智能体设计。相比同类开源模型，其 t…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月11日 21:00</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmsoolxde07isrop2eb5rrtvq" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#3</span>
+    <span class="src-chip">公众号：蚂蚁百灵（Ling）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmsogatbh0qdgrofwzm7gdk0a" target="_blank" rel="noopener noreferrer">Ling-3.0-tiny 正式开源：1.3B 激活参数如何进入真实任务</a></h3>
+  <p class="card-summary">蚂蚁百灵开源 Ling-3.0-tiny，一款总参数 7.9B、推理时仅激活 1.3B 参数的原生混合推理模型，同步提供 BF16、FP8 和 INT4 三个版…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月11日 17:20</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmsogatbh0qdgrofwzm7gdk0a" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article></div>
+</section><section class="section" id="sec-1">
+  <h2 class="section-title"><span class="section-bar"></span>产品发布/更新 <span class="section-count">4</span></h2>
+  <div class="card-grid"><article class="card">
+  <div class="card-head">
+    <span class="card-num">#4</span>
+    <span class="src-chip">X：Runway (@runwayml)</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmsp1lufu03a9rortoc0ci36q" target="_blank" rel="noopener noreferrer">Runway Seedance 2.5 上线，支持50角色参考</a></h3>
+  <p class="card-summary">完整阵容，完整曲目，一次生成一个。
+
+Seedance 2.5 已在 Runway 上线，支持 50 个独特角色参考，以及最长 30 秒、与音乐同步的片…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月12日 02:53</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmsp1lufu03a9rortoc0ci36q" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#5</span>
+    <span class="src-chip">X：OpenAI Developers (@OpenAIDevs)</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmsp0j1ph027prortm21absbh" target="_blank" rel="noopener noreferrer">ChatGPT 桌面端支持导入其他智能体工作数据</a></h3>
+  <p class="card-summary">你现在可以将其他智能体的工作内容与 ChatGPT Work 和 Codex 保持同步。
+
+可导入项目、聊天记录、技能和插件，查看导入历史，并可…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月12日 02:20</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmsp0j1ph027prortm21absbh" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#6</span>
+    <span class="src-chip">Google Cloud：Databases（RSS）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmsow47ob08oarohd6vhpqrwt" target="_blank" rel="noopener noreferrer">Gemini 助力 Database Migration Service 加速 PostgreSQL 迁移</a></h3>
+  <p class="card-summary">Google Cloud 在 Database Migration Service（DMS）中推出由 Gemini 驱动的 AI 辅助代码转换，可将 Oracle 或 SQL Server 的存储…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月12日 00:00</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmsow47ob08oarohd6vhpqrwt" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#7</span>
+    <span class="src-chip">公众号：智谱（GLM）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmso95agg0ig3rofwaqvy9crw" target="_blank" rel="noopener noreferrer">ZCode全面升级：Goal、Subagents、Remote Control与闲时任务四大功能上线</a></h3>
+  <p class="card-summary">ZCode针对GLM深度优化，今日上线Goal、Subagents、Remote Control与闲时任务四大功能。在Z.ai Code Bench测试中，GLM-5.2搭配ZCo…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月11日 13:52</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmso95agg0ig3rofwaqvy9crw" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article></div>
+</section><section class="section" id="sec-2">
+  <h2 class="section-title"><span class="section-bar"></span>行业动态 <span class="section-count">5</span></h2>
+  <div class="card-grid"><article class="card">
+  <div class="card-head">
+    <span class="card-num">#8</span>
+    <span class="src-chip">The Verge：AI（RSS）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmsp2lgxo03xjrortthctedzu" target="_blank" rel="noopener noreferrer">ChatGPT 与 Gemini 双双突破 10 亿用户</a></h3>
+  <p class="card-summary">OpenAI 与 Google 的聊天机器人均跨过 10 亿用户门槛。OpenAI 在 8 月 6 日的博文中披露 ChatGPT 月活用户超 10 亿，Google CEO…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月12日 03:41</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmsp2lgxo03xjrortthctedzu" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#9</span>
+    <span class="src-chip">The Decoder：AI News（RSS）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmsoydypn029yro3yvsi036au" target="_blank" rel="noopener noreferrer">研究人员发现可读取ChatGPT等模型加密推理过程的API漏洞</a></h3>
+  <p class="card-summary">Alexander Panfilov团队发现OpenAI、Anthropic、Google等主要AI提供商API存在漏洞，可读取推理模型的加密思考过程。扫描约7000条…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月12日 01:38</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmsoydypn029yro3yvsi036au" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#10</span>
+    <span class="src-chip">X：Sundar Pichai (@sundarpichai)</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmsoxh6oa0a3drohdskp7cb9u" target="_blank" rel="noopener noreferrer">Gemini月活破10亿，成谷歌增长最快产品</a></h3>
+  <p class="card-summary">每月已有超过 10 亿人使用 @Geminiapp 激发新想法、完成工作。这是我们有史以来增长最快的产品，也是第 14 个达到 10 亿用户里程…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月12日 01:00</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmsoxh6oa0a3drohdskp7cb9u" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#11</span>
+    <span class="src-chip">IT之家（RSS）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmsostkpq05iurohd30b8ubmy" target="_blank" rel="noopener noreferrer">消息称英伟达开发万亿参数开源 AI 模型 Nemotron 4，目标挑战全球顶级</a></h3>
+  <p class="card-summary">英伟达正在研发新一代开源 AI 模型系列 Nemotron 4，规模最大的模型预计至少拥有 1 万亿个参数，旨在与全球最先进的开源模型竞争…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月11日 22:54</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmsostkpq05iurohd30b8ubmy" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#12</span>
+    <span class="src-chip">IT之家（RSS）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmso58oqr0b7trofwl3dcmz7y" target="_blank" rel="noopener noreferrer">消息称 Anthropic 最快今年 9 月上市，向投资者淡化 AI 模型竞争等挑战</a></h3>
+  <p class="card-summary">Anthropic 正与潜在投资者接触，为可能成为史上规模最大的 IPO 做准备，计划今年 9 月或 10 月初正式上市。公司估值高达 9，650…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月11日 11:57</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmso58oqr0b7trofwl3dcmz7y" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article></div>
+</section><section class="section" id="sec-3">
+  <h2 class="section-title"><span class="section-bar"></span>论文研究 <span class="section-count">5</span></h2>
+  <div class="card-grid"><article class="card">
+  <div class="card-head">
+    <span class="card-num">#13</span>
+    <span class="src-chip">Google Blog：AI（RSS）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmsoxbh180a00rohdooafsmzp" target="_blank" rel="noopener noreferrer">AMIE 研究医疗 AI 系统首次展示实时临床视频问诊能力</a></h3>
+  <p class="card-summary">Google Research 与 Google DeepMind 推进医疗 AI 系统 AMIE，实现实时临床视频问诊，首次在此场景展示专家级 AI 能力。该系统基…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月12日 01:00</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmsoxbh180a00rohdooafsmzp" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#14</span>
+    <span class="src-chip">Hacker News 热门（buzzing.cc 中文翻译）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmsox86zv09u6rohdqr80wg0x" target="_blank" rel="noopener noreferrer">Apple Silicon 与 macOS 虚拟机：借助 Llama.cpp 实现 11-16 倍的 LLM 推理加速</a></h3>
+  <p class="card-summary">研究团队为 macOS 虚拟机中的 Metal 能力查询构建进程级兼容层，使 llama.cpp 能选用更新的 Metal 内核。在 M1 Ultra 上，TinyLl…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月12日 00:41</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmsox86zv09u6rohdqr80wg0x" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#15</span>
+    <span class="src-chip">LMSYS：Blog（Chatbot Arena 团队）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmsopyoum028vrohd4dgeksz9" target="_blank" rel="noopener noreferrer">统一 Radix 缓存：为混合模型前缀缓存构建单一树结构</a></h3>
+  <p class="card-summary">LMSYS 团队提出 Unified Radix Cache，用单一 token 键控 radix 拓扑统一管理混合模型的 FULL、SWA 和 MAMBA 组件缓存，各组件独…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月11日 21:51</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmsopyoum028vrohd4dgeksz9" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#16</span>
+    <span class="src-chip">HuggingFace Daily Papers（社区热门论文）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmsodc28j0n07rofw30v8pe9v" target="_blank" rel="noopener noreferrer">窃取专有 LLM API 的推理轨迹：加密块可跨会话互换引发解密越狱</a></h3>
+  <p class="card-summary">研究发现，Anthropic、OpenAI 和 Google 等专有 LLM 的加密推理轨迹块可跨会话、用户和模型互换，攻击者将其注入同提供商防护较弱…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月10日 08:00</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmsodc28j0n07rofw30v8pe9v" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#17</span>
+    <span class="src-chip">HuggingFace Daily Papers（社区热门论文）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmso6wigb0d1profw2f6djg98" target="_blank" rel="noopener noreferrer">RynnValue：用时间距离扩展机器人价值基础模型</a></h3>
+  <p class="card-summary">RynnValue 是一款开源的机器人操作价值基础模型，用时间距离替代偏好或进度等任务内锚点作为监督信号，可直接从时间戳生成标签…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月10日 08:00</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmso6wigb0d1profw2f6djg98" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article></div>
+</section><section class="section" id="sec-4">
+  <h2 class="section-title"><span class="section-bar"></span>技巧与观点 <span class="section-count">7</span></h2>
+  <div class="card-grid"><article class="card">
+  <div class="card-head">
+    <span class="card-num">#18</span>
+    <span class="src-chip">公众号：数字生命卡兹克</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmspc30un0e4xrorts1kax9zg" target="_blank" rel="noopener noreferrer">零基础用户半天上手AI的12步实操流程</a></h3>
+  <p class="card-summary">文章给出一套零基础用户半天上手AI的12步实操流程：准备内存不低于16G的电脑，订阅ChatGPT并安装Codex或使用WorkBuddy，用语音输…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月12日 08:08</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmspc30un0e4xrorts1kax9zg" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#19</span>
+    <span class="src-chip">Hacker News 热门（buzzing.cc 中文翻译）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmsp0g9v20242rort4zh7mzx0" target="_blank" rel="noopener noreferrer">将 GitHub Copilot 置于中间人（MitM）代理之后后，我学到了什么</a></h3>
+  <p class="card-summary">作者通过 mitmproxy 对 VS Code 中的 GitHub Copilot 进行中间人代理拦截，逆向分析其网络流量与内部架构。文章指出这些 AI 应用…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月12日 02:32</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmsp0g9v20242rort4zh7mzx0" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#20</span>
+    <span class="src-chip">Tomer Tunguz 博客（VC 分析）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmsoylk4i02drro3yt4l3vhyn" target="_blank" rel="noopener noreferrer">每个类别都有赢家：AI 时代 SaaS 龙头的估值溢价</a></h3>
+  <p class="card-summary">SaaS 估值整体承压，但每个细分赛道都跑出了 AI 龙头：CrowdStrike 以 34.4x 前瞻收入领跑安全（中位数 3.9x），Cloudflare 32.6…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月11日 08:00</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmsoylk4i02drro3yt4l3vhyn" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#21</span>
+    <span class="src-chip">Dwarkesh Patel：Podcast &amp; Blog（RSS）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmsowxh6d09rrrohdkhpckhpi" target="_blank" rel="noopener noreferrer">Ryan Greenblatt：人类级AI或于2032年前通过递归自我改进催生失控超级智能</a></h3>
+  <p class="card-summary">Dwarkesh Patel与Redwood Research首席科学家Ryan Greenblatt探讨递归自我改进（RSI）的可能性：一旦AI达到人类顶级专家水平，可…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月12日 00:31</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmsowxh6d09rrrohdkhpckhpi" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#22</span>
+    <span class="src-chip">The Verge：AI（RSS）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmsokd2b00viorofwaq9wrsv1" target="_blank" rel="noopener noreferrer">OpenAI 用 Astra 模型攻克 10 道数学难题，数学家既兴奋又担忧</a></h3>
+  <p class="card-summary">OpenAI 宣布其未发布的 Astra 模型解决了 10 道长期悬而未决的数学难题，涵盖球体堆积、纠错码、非 sofic 群存在性等领域，并发布…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月11日 19:00</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmsokd2b00viorofwaq9wrsv1" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#23</span>
+    <span class="src-chip">MarkTechPost（RSS）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmso8nqa70eq4rofw24w1wlwt" target="_blank" rel="noopener noreferrer">用 ComfyUI API 实现 MiniMax-H3 多模态视频与音频生成流水线</a></h3>
+  <p class="card-summary">本教程演示如何以 ComfyUI 为无头推理后端，构建端到端的 MiniMax-H3 视频生成工作流。通过 Python 直接构建执行图，支持文生视频…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月11日 13:44</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmso8nqa70eq4rofw24w1wlwt" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#24</span>
+    <span class="src-chip">Hacker News 热门（buzzing.cc 中文翻译）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmso7i0al0dlsrofwivmpsjh1" target="_blank" rel="noopener noreferrer">编写智能体时，哪种编程语言最合适？</a></h3>
+  <p class="card-summary">针对&quot;动态语言比静态语言更省 LLM token&quot;的流行说法，作者用 GPT-5.6 Sol 让智能体实现 zstd 解码器进行实测。结果显示，medium…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月11日 12:58</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmso7i0al0dlsrofwivmpsjh1" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article></div>
+</section>
+
+    <footer class="foot">
+      <p>总条数：24 条 ｜ 数据来源：AI HOT（2026-08-12 日报，公开 v1 API）</p>
+      <p>由 WorkBuddy 自动生成 · 内容版权归原作者所有 · 摘要经 AI 整理，详见<a href="https://aihot.virxact.com/daily/2026-08-12" target="_blank" rel="noopener noreferrer">原文</a></p>
+    </footer>
+  </div>
+</body>
+</html>
