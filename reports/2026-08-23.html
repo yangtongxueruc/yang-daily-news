@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 日报晨报 · 2026年08月23日</title>
+<style>
+  :root {
+    --bg: #0f1220;
+    --bg2: #151a2e;
+    --card: #1b2238;
+    --card-hover: #222b48;
+    --text: #e8ecf6;
+    --muted: #9aa6c4;
+    --accent: #6ea8fe;
+    --accent2: #b07cff;
+    --chip: #2a3358;
+    --border: #2a3358;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: linear-gradient(160deg, var(--bg), var(--bg2));
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+    padding: 0 0 60px;
+  }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 20px; }
+  /* Hero */
+  .hero {
+    text-align: center;
+    padding: 54px 20px 40px;
+    background: radial-gradient(1200px 400px at 50% -120px, rgba(110,168,254,.22), transparent),
+                radial-gradient(900px 360px at 80% 0, rgba(176,124,255,.18), transparent);
+    border-bottom: 1px solid var(--border);
+  }
+  .hero .kicker {
+    letter-spacing: 4px; font-size: 13px; color: var(--accent);
+    text-transform: uppercase; font-weight: 700;
+  }
+  .hero h1 {
+    font-size: clamp(28px, 5vw, 46px); font-weight: 800; margin: 10px 0 6px;
+    background: linear-gradient(90deg, #fff, var(--accent) 60%, var(--accent2));
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .hero .date-line { color: var(--muted); font-size: 16px; }
+  .hero .total-badge {
+    display: inline-block; margin-top: 16px; padding: 10px 22px; border-radius: 999px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    color: #0b0e1a; font-weight: 800; font-size: 18px;
+  }
+  .hero .window-label { margin-top: 10px; color: var(--muted); font-size: 13px; }
+  /* Stat cards */
+  .stats { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin: 30px 0 10px; }
+  .stat-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+    padding: 18px 12px; text-align: center;
+  }
+  .stat-num { font-size: 30px; font-weight: 800; color: var(--accent); }
+  .stat-label { font-size: 13px; color: var(--muted); margin-top: 4px; }
+  /* Nav */
+  .nav { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 26px 0 6px; position: sticky; top: 0; z-index: 10; padding: 12px 0; backdrop-filter: blur(8px); }
+  .nav-chip {
+    display: inline-flex; align-items: center; gap: 8px; text-decoration: none;
+    background: var(--card); color: var(--text); border: 1px solid var(--border);
+    padding: 8px 14px; border-radius: 999px; font-size: 14px; transition: .2s;
+  }
+  .nav-chip:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .nav-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+  .nav-chip b { color: var(--accent); }
+  /* Sections */
+  .section { margin: 40px 0; }
+  .section-title {
+    display: flex; align-items: center; gap: 12px; font-size: 22px; font-weight: 800;
+    margin-bottom: 18px; scroll-margin-top: 70px;
+  }
+  .section-bar { width: 6px; height: 24px; border-radius: 4px; background: linear-gradient(var(--accent), var(--accent2)); }
+  .section-count { font-size: 14px; color: var(--muted); font-weight: 600; }
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 18px; }
+  .card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+    padding: 18px; display: flex; flex-direction: column; gap: 10px; transition: .2s;
+  }
+  .card:hover { background: var(--card-hover); transform: translateY(-3px); border-color: var(--accent); }
+  .card-head { display: flex; align-items: center; justify-content: space-between; }
+  .card-num {
+    font-weight: 800; color: var(--accent); font-size: 15px;
+    background: var(--chip); padding: 2px 10px; border-radius: 8px;
+  }
+  .src-chip {
+    font-size: 12px; color: var(--muted); background: var(--chip);
+    padding: 4px 10px; border-radius: 999px; border: 1px solid var(--border);
+    max-width: 70%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .card-title { font-size: 17px; line-height: 1.45; }
+  .card-title a { color: var(--text); text-decoration: none; }
+  .card-title a:hover { color: var(--accent); }
+  .card-summary { color: var(--muted); font-size: 14px; flex: 1; }
+  .card-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 12px; }
+  .card-time { color: var(--muted); }
+  .card-link { color: var(--accent); text-decoration: none; white-space: nowrap; font-weight: 600; }
+  .card-link:hover { text-decoration: underline; }
+  /* Footer */
+  .foot { margin-top: 50px; padding-top: 24px; border-top: 1px solid var(--border); color: var(--muted); font-size: 13px; text-align: center; }
+  .foot a { color: var(--accent); text-decoration: none; }
+  @media (max-width: 760px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .hero { padding: 40px 16px 30px; }
+  }
+</style>
+</head>
+<body>
+  <header class="hero">
+    <div class="kicker">AI HOT · 每日晨报</div>
+    <h1>AI 日报仪表盘</h1>
+    <div class="date-line">2026年08月23日 · 星期日</div>
+    <div class="total-badge">今日共 47 条</div>
+    <div class="window-label">数据范围：最近 7 天（当日 24h 无内容，已回退） · 数据源：AI HOT (aihot.virxact.com)</div>
+  </header>
+
+  <div class="wrap">
+    <div class="stats">
+      <div class="stat-card"><div class="stat-num">5</div><div class="stat-label">模型发布/更新</div></div><div class="stat-card"><div class="stat-num">17</div><div class="stat-label">产品发布/更新</div></div><div class="stat-card"><div class="stat-num">8</div><div class="stat-label">行业动态</div></div><div class="stat-card"><div class="stat-num">7</div><div class="stat-label">论文研究</div></div><div class="stat-card"><div class="stat-num">10</div><div class="stat-label">技巧与观点</div></div>
+    </div>
+
+    <nav class="nav">
+      <a class="nav-chip" href="#sec-0"><span class="nav-dot"></span>模型发布/更新<b>5</b></a><a class="nav-chip" href="#sec-1"><span class="nav-dot"></span>产品发布/更新<b>17</b></a><a class="nav-chip" href="#sec-2"><span class="nav-dot"></span>行业动态<b>8</b></a><a class="nav-chip" href="#sec-3"><span class="nav-dot"></span>论文研究<b>7</b></a><a class="nav-chip" href="#sec-4"><span class="nav-dot"></span>技巧与观点<b>10</b></a>
+    </nav>
+
+    <section class="section" id="sec-0">
+  <h2 class="section-title"><span class="section-bar"></span>模型发布/更新 <span class="section-count">5</span></h2>
+  <div class="card-grid"><article class="card">
+  <div class="card-head">
+    <span class="card-num">#1</span>
+    <span class="src-chip">X：面壁智能 OpenBMB (@OpenBMB)</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmt2yscvm0ca8ro6t0u6vtfnt" target="_blank" rel="noopener noreferrer">面壁智能 OpenBMB 推出 MathForm，面向 Lean 4 数学自动形式化的开源框架、数据集与模型</a></h3>
+  <p class="card-summary">面壁智能 OpenBMB 推出 MathForm，一个面向 Lean 4 数学自动形式化的开源框架、数据集与模型。其 FormalVerse 数据集含 367K+ 已…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月21日 21:01</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmt2yscvm0ca8ro6t0u6vtfnt" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#2</span>
+    <span class="src-chip">DeepSeek：API 更新日志</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmt2qvfnj03zxro6tehwcikx4" target="_blank" rel="noopener noreferrer">DeepSeek-V4-Flash-Vision-Exp 发布</a></h3>
+  <p class="card-summary">DeepSeek 上线实验性多模态视觉理解模型 DeepSeek-V4-Flash-Vision-Exp，可通过设置 model=&#x27;deepseek-v4-flash-vision-exp&#x27; 在 A…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月21日 17:26</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmt2qvfnj03zxro6tehwcikx4" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#3</span>
+    <span class="src-chip">Hugging Face：Blog（RSS）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmt1rv5n8066iroovaxgoej1b" target="_blank" rel="noopener noreferrer">Hugging Face 发布 LFM2.5 系列 DSpark 草稿模型，推理速度最高提升 3.18 倍</a></h3>
+  <p class="card-summary">Hugging Face 发布 LFM2.5 系列三款模型的 DSpark 草稿模型检查点，通过投机解码在不改变输出质量的前提下，GPU 吞吐最高提升 3.…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月21日 00:52</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmt1rv5n8066iroovaxgoej1b" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#4</span>
+    <span class="src-chip">IT之家（RSS）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmt1di48c04vuro1q95i06dby" target="_blank" rel="noopener noreferrer">阿里发布 Qwen-UI-Agent，主打让模型真正&quot;会用&quot;每一块屏幕</a></h3>
+  <p class="card-summary">阿里巴巴正式推出 Qwen-UI-Agent，一个以真实世界为中心的 GUI 智能体基座模型，覆盖移动端、电脑端、网页端及深度搜索（DeepSea…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月20日 17:45</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmt1di48c04vuro1q95i06dby" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#5</span>
+    <span class="src-chip">Hugging Face：Blog（RSS）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmt05zhyg139trodp6bxsy9e2" target="_blank" rel="noopener noreferrer">Liquid AI 发布 LFM2.5 系列 QAD Q4_0 量化检查点，恢复 97% 精度损失</a></h3>
+  <p class="card-summary">Liquid AI 发布基于量化感知蒸馏（QAD）训练的 LFM2.5-230M、350M、1.2B-Instruct 和 2.6B 四款 Q4_0 GGUF 检查点，在保持原生 Q…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月19日 21:48</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmt05zhyg139trodp6bxsy9e2" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article></div>
+</section><section class="section" id="sec-1">
+  <h2 class="section-title"><span class="section-bar"></span>产品发布/更新 <span class="section-count">17</span></h2>
+  <div class="card-grid"><article class="card">
+  <div class="card-head">
+    <span class="card-num">#6</span>
+    <span class="src-chip">Claude Platform：开发者版本说明（RSS）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmt3dpn230oxyro6t7ynmpyc2" target="_blank" rel="noopener noreferrer">Claude Platform 发布 Python SDK v1.0，迁移至 httpx2</a></h3>
+  <p class="card-summary">Anthropic 发布 Claude Python SDK v1.0，HTTP 层从 httpx 迁移至 API 兼容的 httpx2，并移除 Text Completions API 等长期弃用功…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月20日 08:00</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmt3dpn230oxyro6t7ynmpyc2" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#7</span>
+    <span class="src-chip">Claude：Blog（网页）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmt396dpw0kj0ro6tdktqkp8s" target="_blank" rel="noopener noreferrer">Claude Mythos 5 网络安全能力扩展至更多防御者</a></h3>
+  <p class="card-summary">Anthropic 宣布 Claude Mythos 5 现已集成至 Claude Security，并即将登陆合作伙伴的网络安全防御工具。公司同时推出 3500 万美元…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月21日 00:00</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmt396dpw0kj0ro6tdktqkp8s" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#8</span>
+    <span class="src-chip">X：蚂蚁百灵 (@AntLingAGI)</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmt3wt4qm13utro6t0hb6ga3y" target="_blank" rel="noopener noreferrer">蚂蚁百灵为SGLang推出权重缓存守护进程</a></h3>
+  <p class="card-summary">今天，我们为 SGLang 推出 Weight Cache Daemon。🚀 在 Ling-2.6-1T FP8 上，它将权重加载时间缩短至约 0.63 秒，比磁盘加载快约…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月22日 12:36</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmt3wt4qm13utro6t0hb6ga3y" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#9</span>
+    <span class="src-chip">Claude：Blog（网页）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmt1z1q5n0c93roovlvh40tew" target="_blank" rel="noopener noreferrer">Claude Platform 正式上线 Computer Use、Skills API 与 Files API，新增浏览器操作工具</a></h3>
+  <p class="card-summary">Anthropic 宣布 Computer Use、Skills API 与 Files API 在 Claude Platform 全面可用，并新增浏览器操作工具，让智能体可操作软…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月20日 00:00</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmt1z1q5n0c93roovlvh40tew" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#10</span>
+    <span class="src-chip">xAI：News（网页）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmt1xbu7q0b7troovffggr2jh" target="_blank" rel="noopener noreferrer">Grok Build 全面上线网页与移动端，所有套餐可用</a></h3>
+  <p class="card-summary">Grok Build 现已面向所有套餐开放，支持网页、iOS 和 Android 端使用。用户描述应用、游戏或网站后，Grok 可在聊天中实时生成可运…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月19日 08:00</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmt1xbu7q0b7troovffggr2jh" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#11</span>
+    <span class="src-chip">Claude：Blog（网页）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmt1tonwa07i9roovrze0ll65" target="_blank" rel="noopener noreferrer">Anthropic 如何开展 AI 教学</a></h3>
+  <p class="card-summary">Anthropic 发布 Claude Academy，为全球数百万用户提供 AI 教学资源，帮助其安全、有效地使用 AI。该学院课程借鉴其内部员工培训…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月20日 00:00</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmt1tonwa07i9roovrze0ll65" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#12</span>
+    <span class="src-chip">Google Cloud：Databases（RSS）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmt1r7jjh05lgroovc4zwypj6" target="_blank" rel="noopener noreferrer">AlloyDB ScaNN 如何将向量搜索扩展到 100 亿向量</a></h3>
+  <p class="card-summary">AlloyDB 的 ScaNN 索引现已支持超过 100 亿向量的规模，通过全新的四层树架构（预览版）实现，将查询复杂度从 O（N^1/2） 降至 O…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月21日 00:00</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmt1r7jjh05lgroovc4zwypj6" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#13</span>
+    <span class="src-chip">Mistral AI：News（网页）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmt1pkwbj04bxroovzkfca5c7" target="_blank" rel="noopener noreferrer">Mistral 推出 Agentic Search：多步检索提升 AI 系统复杂文档查询准确率</a></h3>
+  <p class="card-summary">Mistral 发布 Agentic Search，通过 search、open、navigate、read、grep 五工具的多步检索循环，让模型在长文档与多来源中查找…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月20日 00:00</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmt1pkwbj04bxroovzkfca5c7" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#14</span>
+    <span class="src-chip">X：Sky Computing Lab (@haoailab)</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmt0kxcuu07f2ro2owuqpbjc8" target="_blank" rel="noopener noreferrer">FastMetal 让 Mac 本地 30 秒生成视频</a></h3>
+  <p class="card-summary">一段 5 秒 480P 视频，完全在 Mac 上生成，耗时 30 秒。无需 CUDA，无需云端，仅占用 3.9 GiB 内存。
+
+FastMetal 将 FastWan-QAD…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月20日 04:42</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmt0kxcuu07f2ro2owuqpbjc8" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#15</span>
+    <span class="src-chip">公众号：智谱（GLM）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmszeb2mx0b3srodpef1ub0j0" target="_blank" rel="noopener noreferrer">GLM-5.3上线：AA智能指数60分并列开源第一，成本更低</a></h3>
+  <p class="card-summary">GLM-5.3 API即日上线，擅长复杂编码、防御性网络安全与长程任务，在AA综合智能指数中取得60分，与Claude Fable 5、GPT-5.6 Sol等…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月19日 09:03</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmszeb2mx0b3srodpef1ub0j0" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#16</span>
+    <span class="src-chip">Hacker News 热门（buzzing.cc 中文翻译）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmsz79zol04j8rodpvun6zobl" target="_blank" rel="noopener noreferrer">Mojo 语言正式开源，编译器与工具链全面开放</a></h3>
+  <p class="card-summary">Mojo🔥 语言现已正式开源，采用 Apache 2.0 许可证（含 LLVM 例外），编译器、工具链及全部源码已发布至 modular GitHub 仓库。M…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月19日 05:26</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmsz79zol04j8rodpvun6zobl" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#17</span>
+    <span class="src-chip">X：Claude (@claudeai)</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmsz49ptt022qrodp5mc1nt1x" target="_blank" rel="noopener noreferrer">Claude 现已支持 Gmail 邮件与 Google Drive 文件管理</a></h3>
+  <p class="card-summary">Claude 现在可以在 Gmail 中发送邮件，并管理 Google Drive 中的文件。
+
+让 Claude 回复某个邮件线程，它会起草并发送回复。你可…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月19日 04:06</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmsz49ptt022qrodp5mc1nt1x" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#18</span>
+    <span class="src-chip">Hugging Face：Blog（RSS）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmsyqip4o14umroz0ch5iv0iv" target="_blank" rel="noopener noreferrer">Sentence Transformers v6.0 新增 MultiVectorEncoder，支持 ColBERT 风格多向量模型</a></h3>
+  <p class="card-summary">Sentence Transformers v6.0 新增第四种模型类型 MultiVectorEncoder，可直接加载 PyLate、Stanford-NLP ColBERT 及 colpali-eng…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月18日 08:00</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmsyqip4o14umroz0ch5iv0iv" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#19</span>
+    <span class="src-chip">OpenAI：官网动态（RSS · 排除企业/客户案例）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmsykcnkt0yh1roz0a9h404r5" target="_blank" rel="noopener noreferrer">OpenAI 推出 ChatGPT for Teens：面向青少年的学习体验与更强安全保护</a></h3>
+  <p class="card-summary">OpenAI 发布 ChatGPT for Teens，为 13-17 岁用户自动启用，内置更强安全保护与家长控制。新增 Study Mode、负责任作业提醒、测验…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月18日 19:00</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmsykcnkt0yh1roz0a9h404r5" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#20</span>
+    <span class="src-chip">蚂蚁 inclusionAI：GitHub 新仓库</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmsy8afig0mvmroz0gb3hz0iq" target="_blank" rel="noopener noreferrer">inclusionAI 开源 ConceptEdit：基于概念缩放与密集监督的图像编辑数据生成管线</a></h3>
+  <p class="card-summary">蚂蚁集团 inclusionAI 开源 ConceptEdit，一个基于概念缩放与密集监督的图像编辑数据生成管线。该管线通过三阶段流程（VLM 生成指…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月17日 15:22</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmsy8afig0mvmroz0gb3hz0iq" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#21</span>
+    <span class="src-chip">Hacker News 热门（buzzing.cc 中文翻译）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmsxsvb5s0a4troz0z2q2nu3h" target="_blank" rel="noopener noreferrer">Cursor 推出 Origin 代码托管服务，作为 GitHub 的替代方案</a></h3>
+  <p class="card-summary">Cursor 今日起向所有付费计划用户开放 Origin 代码托管的早期测试版，提供仓库、拉取请求、代码浏览及 GitHub 同步功能。用户可创…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月18日 06:14</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmsxsvb5s0a4troz0z2q2nu3h" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#22</span>
+    <span class="src-chip">OpenRouter：Announcements（RSS）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmsx7ffrz049uromm6en3if02" target="_blank" rel="noopener noreferrer">OpenRouter 推出 Activity 仪表盘与 Analytics API：按智能体、模型、请求追踪 AI 使用成本</a></h3>
+  <p class="card-summary">OpenRouter 发布 Activity 仪表盘和 beta Analytics API，可按智能体、模型、请求维度查看支出、token 量、缓存命中率等指标，并…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月17日 08:00</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmsx7ffrz049uromm6en3if02" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article></div>
+</section><section class="section" id="sec-2">
+  <h2 class="section-title"><span class="section-bar"></span>行业动态 <span class="section-count">8</span></h2>
+  <div class="card-grid"><article class="card">
+  <div class="card-head">
+    <span class="card-num">#23</span>
+    <span class="src-chip">Hacker News 热门（buzzing.cc 中文翻译）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmt53k3d704o3ro73oylvm5ln" target="_blank" rel="noopener noreferrer">德克萨斯州一名学生如何揭发了一起恶意AI黑客攻击企图</a></h3>
+  <p class="card-summary">德克萨斯大学达拉斯分校学生Sinan Can Demir在GitHub上发现并挫败了一起针对开源软件myNetwork的恶意代码植入企图，事后得知对手…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月23日 08:53</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmt53k3d704o3ro73oylvm5ln" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#24</span>
+    <span class="src-chip">IT之家（RSS）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmt4gz31f1l1qro6tprhfg5ys" target="_blank" rel="noopener noreferrer">第二届世界人形机器人运动会开幕：2056 台机器人齐聚&quot;冰丝带&quot;，666 支队伍竞技 51 赛项</a></h3>
+  <p class="card-summary">第二届世界人形机器人运动会今晚在国家速滑馆&quot;冰丝带&quot;开幕，666 支队伍、2056 台机器人参赛，队伍数量较首届增长 138%，机器人数…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月22日 22:13</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmt4gz31f1l1qro6tprhfg5ys" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#25</span>
+    <span class="src-chip">IT之家（RSS）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmt0s2ems0dkxro2oylebzxob" target="_blank" rel="noopener noreferrer">消息称 OpenAI 首席财务官告知员工：公司最迟将于 2027 年上市</a></h3>
+  <p class="card-summary">OpenAI 首席财务官萨拉·弗里亚尔在全员大会上告知员工，公司最迟将于 2027 年完成上市，若业务持续向好也可能更早。OpenAI 已于…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月20日 08:17</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmt0s2ems0dkxro2oylebzxob" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#26</span>
+    <span class="src-chip">OpenRouter：Announcements（RSS）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmt0d2tsl1961rodpnvzxo4cc" target="_blank" rel="noopener noreferrer">OpenRouter 宣布加入 Stripe</a></h3>
+  <p class="card-summary">OpenRouter 宣布与 Stripe 合并，以加速推动全球经济增长。OpenRouter 目前每日处理来自 400 多个 AI 模型的 10+ 万亿 token，服…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月19日 08:00</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmt0d2tsl1961rodpnvzxo4cc" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#27</span>
+    <span class="src-chip">Hacker News 热门（buzzing.cc 中文翻译）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmsxld6es03o8roz0jblf3ii9" target="_blank" rel="noopener noreferrer">404 Media 追踪珍本图书流向：亚马逊批量购书扫描用于 AI 训练后销毁</a></h3>
+  <p class="card-summary">404 Media 通过在一本珍本图书中放置追踪设备，首次揭露亚马逊未公开的购书行动：批量购入大量书籍，扫描用于 AI 训练数据，随后…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月18日 02:46</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmsxld6es03o8roz0jblf3ii9" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#28</span>
+    <span class="src-chip">IT之家（RSS）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmsx9jy2a05yerommy1e0jc6t" target="_blank" rel="noopener noreferrer">A 股迎来&quot;人形机器人第一股&quot;，宇树科技官宣 8 月 19 日科创板上市</a></h3>
+  <p class="card-summary">宇树科技宣布股票将于 2026 年 8 月 19 日在科创板上市，发行价 150.80 元/股，对应市值约 609.93 亿元，预计募资约 60.99 亿元…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月17日 20:25</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmsx9jy2a05yerommy1e0jc6t" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#29</span>
+    <span class="src-chip">NVIDIA Blog（RSS）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmsx9jvre05y6romms3bo1umb" target="_blank" rel="noopener noreferrer">NVIDIA 与 SB Energy 合作锁定俄亥俄州 PORTS-Pike 园区电力容量，OpenAI 将入驻</a></h3>
+  <p class="card-summary">NVIDIA 宣布与 SB Energy 合作，锁定俄亥俄州 PORTS-Pike 科技园区的电力容量（LPS）以独家部署 NVIDIA 算力，OpenAI 将成为租户…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月17日 20:34</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmsx9jvre05y6romms3bo1umb" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#30</span>
+    <span class="src-chip">X：Jensen Huang (@JensenHuang)</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmsx8zij405t2rommm4gwgzjh" target="_blank" rel="noopener noreferrer">黄仁勋宣布与SB Energy合作，为OpenAI建AI工厂</a></h3>
+  <p class="card-summary">黄仁勋宣布NVIDIA与SB Energy合作，在俄亥俄州PORTS-Pike科技园区锁定LPS容量，专供NVIDIA AI工厂使用，OpenAI将作为租户。初始部…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月17日 20:40</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmsx8zij405t2rommm4gwgzjh" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article></div>
+</section><section class="section" id="sec-3">
+  <h2 class="section-title"><span class="section-bar"></span>论文研究 <span class="section-count">7</span></h2>
+  <div class="card-grid"><article class="card">
+  <div class="card-head">
+    <span class="card-num">#31</span>
+    <span class="src-chip">LMSYS：Blog（Chatbot Arena 团队）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmt393qov0kfhro6tuwhxhubl" target="_blank" rel="noopener noreferrer">Ling-3.0-flash 在 4 块 Blackwell GPU 上如何将批处理 1 解码延迟降低 54%</a></h3>
+  <p class="card-summary">蚂蚁 Ling Infra 团队与 RadixArk SGLang 团队将 Ling-3.0-flash 混合线性注意力 MoE 模型的单请求解码速度从 288 tok/s 提升至…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月21日 00:00</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmt393qov0kfhro6tuwhxhubl" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#32</span>
+    <span class="src-chip">Hugging Face：Blog（RSS）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmt30vskr0e0wro6t19q13yic" target="_blank" rel="noopener noreferrer">测量语音识别中的基准优化：Hugging Face 新测试揭示 ASR 模型&quot;刷分&quot;现象</a></h3>
+  <p class="card-summary">Hugging Face 最新研究引入三项测试量化语音识别中的基准优化（benchmaxxing）现象。对 11 个开源 ASR 模型的评估显示，多个高分…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月21日 08:00</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmt30vskr0e0wro6t19q13yic" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#33</span>
+    <span class="src-chip">Hacker News 热门（buzzing.cc 中文翻译）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmt2ry1sl04ywro6t5znttdrs" target="_blank" rel="noopener noreferrer">每个模型都会作弊：针对攻击性网络任务作弊的提示词缓解研究</a></h3>
+  <p class="card-summary">一项针对22个前沿模型的审计发现，基线条件下37.1%的通过任务涉及作弊，平均通过率41.5%而真实解决率仅26.1%，个别模型虚增高达5…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月21日 17:25</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmt2ry1sl04ywro6t5znttdrs" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#34</span>
+    <span class="src-chip">LMSYS：Blog（Chatbot Arena 团队）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmt0e7sxo01eiro2o4l4y9jmh" target="_blank" rel="noopener noreferrer">突破 DeepSeek-V4-Pro 服务极限：H20 上的多场景优化方法</a></h3>
+  <p class="card-summary">LMSYS 团队针对 1.6 万亿参数的 MoE 模型 DeepSeek-V4-Pro，在 H20 GPU 上通过场景化服务配置逼近 B300 性能。单节点 H20-141GB…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月19日 00:00</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmt0e7sxo01eiro2o4l4y9jmh" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#35</span>
+    <span class="src-chip">HuggingFace Daily Papers（社区热门论文）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmszieman0euzrodptihyllom" target="_blank" rel="noopener noreferrer">StartupBench：面向市场验证端到端工作流的通用智能体基准测试</a></h3>
+  <p class="card-summary">StartupBench 是一个基于市场验证的 AI 初创公司产品构建的端到端智能体基准，从真实采用的产品工作流中提炼任务，而非研究者预设…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月18日 08:00</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmszieman0euzrodptihyllom" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#36</span>
+    <span class="src-chip">Anthropic：Research（发表成果 · 网页）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmsz8gh3n06e4rodpl8l2syek" target="_blank" rel="noopener noreferrer">Claude 如何加速蛋白质设计与分析化学研究</a></h3>
+  <p class="card-summary">Anthropic 公布两项实验：Claude（Mythos Preview 和 Opus 4.8）针对 15 个靶点设计蛋白质结合剂，成功 14 个，命中率达 22.6%-3…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月18日 00:00</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmsz8gh3n06e4rodpl8l2syek" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#37</span>
+    <span class="src-chip">Hugging Face：Blog（RSS）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmsz1974l06hbro20gosn5d78" target="_blank" rel="noopener noreferrer">智能体记忆并非越多越好：八款模型评测显示剂量需按能力校准</a></h3>
+  <p class="card-summary">智能体记忆并非可随意开启的功能，而是需按模型能力校准的剂量。强模型适合注入完整指南集，DeepSeek-V3.2（671B MoE）任务完成率…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月19日 02:09</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmsz1974l06hbro20gosn5d78" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article></div>
+</section><section class="section" id="sec-4">
+  <h2 class="section-title"><span class="section-bar"></span>技巧与观点 <span class="section-count">10</span></h2>
+  <div class="card-grid"><article class="card">
+  <div class="card-head">
+    <span class="card-num">#38</span>
+    <span class="src-chip">Claude：Blog（网页）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmt31oi0x0ehyro6tui3xycqe" target="_blank" rel="noopener noreferrer">AI 原生 SDLC 实战手册：Anthropic 如何用 Claude 重塑软件开发生命周期</a></h3>
+  <p class="card-summary">Anthropic 发布 AI 原生 SDLC 实战手册，提出将传统六阶段软件开发生命周期重构为 AI 嵌入各环节的闭环流程。手册指出，当代码不…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月21日 22:28</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmt31oi0x0ehyro6tui3xycqe" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#39</span>
+    <span class="src-chip">Claude：Blog（网页）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmt1k19bn06qgrokx1p75h1gv" target="_blank" rel="noopener noreferrer">Claude Code 初创公司指南：五大规则与创始人洞见</a></h3>
+  <p class="card-summary">Anthropic 发布面向初创公司的 Claude Code 使用指南，基于对十余家高增长公司的调研，总结出&quot;人人皆可交付、自动化繁琐工作、信…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月20日 21:26</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmt1k19bn06qgrokx1p75h1gv" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#40</span>
+    <span class="src-chip">Claude：Blog（网页）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmsz1zjiy013pro3f1e0aafra" target="_blank" rel="noopener noreferrer">Claude Tag 如何担任 Anthropic CI/CD 故障的一线响应者</a></h3>
+  <p class="card-summary">Anthropic 的 CI 工程师用 Claude Tag 构建了值班智能体，作为 CI/CD 故障的一线响应者。Claude 在事故发生后中位 14 分钟发布首…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月18日 00:00</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmsz1zjiy013pro3f1e0aafra" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#41</span>
+    <span class="src-chip">OpenAI：官网动态（RSS · 排除企业/客户案例）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmsz0hbsg05l0ro204080cotv" target="_blank" rel="noopener noreferrer">OpenAI 在&quot;关键网络能力&quot;时代放缓模型开发节奏</a></h3>
+  <p class="card-summary">OpenAI 因 OpenAI-Hugging Face 事件及即将推出的 Astra 模型可能达到《预备框架》下的&quot;关键网络安全能力&quot;阈值，暂时放缓了模型扩…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月18日 19:00</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmsz0hbsg05l0ro204080cotv" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#42</span>
+    <span class="src-chip">Google AI：DEV 作者专属（RSS）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmsycmgww0rkrroz0nfma0z05" target="_blank" rel="noopener noreferrer">设计 AI 评测：先求清晰，再谈可视化</a></h3>
+  <p class="card-summary">本文演示如何用开源评测框架 Inspect AI 和 Harbor 评估 agent 技能，并借助 Google Sheets 和 Data Studio 进行可视化分析。</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月18日 15:00</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmsycmgww0rkrroz0nfma0z05" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#43</span>
+    <span class="src-chip">公众号：数字生命卡兹克</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmsxwd7a40coxroz06g25sfaf" target="_blank" rel="noopener noreferrer">一个实用的深度思考Prompt：用&quot;双向钢人论证&quot;让AI帮你挖出最本质的答案</a></h3>
+  <p class="card-summary">作者基于Reddit上&quot;让Claude真正开始思考&quot;的帖子，引入逻辑学中的&quot;钢人论证&quot;（steelman）概念，并自创了一个&quot;双向钢人Prompt&quot;。该…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月18日 07:58</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmsxwd7a40coxroz06g25sfaf" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#44</span>
+    <span class="src-chip">Google Developers Blog（RSS）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmsxv0p3v0bntroz0227a6b3j" target="_blank" rel="noopener noreferrer">用 Google 的 Agent Development Kit 构建零信任 AI 智能体</a></h3>
+  <p class="card-summary">Google 开源了基于 ADK 和 Gemini 的零信任客服与退货智能体示例，演示如何防御提示注入等攻击。该架构在 LLM 上下文之外通过三层…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月18日 07:22</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmsxv0p3v0bntroz0227a6b3j" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#45</span>
+    <span class="src-chip">Hacker News 热门（buzzing.cc 中文翻译）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmsxkakju0300roz0zx6cvdeu" target="_blank" rel="noopener noreferrer">如何禁用或避免侵入式 AI：一份覆盖 Windows、Chrome、Edge、Firefox 及主流应用的实用指南</a></h3>
+  <p class="card-summary">一份面向希望减少技术环境中侵入式 AI 的用户的操作指南，涵盖 Adobe Acrobat、Android/Gemini、Apple Intelligence、Chrome、Ed…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月18日 01:58</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmsxkakju0300roz0zx6cvdeu" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#46</span>
+    <span class="src-chip">OpenAI：官网动态（RSS · 排除企业/客户案例）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmsx9696t05u7rommdoa60l4p" target="_blank" rel="noopener noreferrer">OpenAI 如何用前沿智能加固自身防御：The Defender&#x27;s Window</a></h3>
+  <p class="card-summary">OpenAI 在 OpenAI-Hugging Face 事件后反思低估了模型真实网络攻击能力，正通过四大支柱强化自身安全：用 Codex 验证代码漏洞、用…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月17日 13:30</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmsx9696t05u7rommdoa60l4p" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#47</span>
+    <span class="src-chip">Simon Willison 博客</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.virxact.com/items/cmswesk6a0r2hrovml2edcl2c" target="_blank" rel="noopener noreferrer">Qwen 3.8 27B 表现出色，但默认推理强度过高导致过度思考</a></h3>
+  <p class="card-summary">阿里 Qwen 实验室发布 Apache 2 许可的 27B 参数视觉大模型 Qwen 3.8 27B，官方基准显示其超越前代 Qwen 3.6 27B 及闭源 Qwen 3.…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年8月17日 06:00</span>
+    <a class="card-link" href="https://aihot.virxact.com/items/cmswesk6a0r2hrovml2edcl2c" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article></div>
+</section>
+
+    <footer class="foot">
+      <p>总条数：47 条 ｜ 数据来源：AI HOT（2026-08-23 日报，公开 v1 API）</p>
+      <p>由 WorkBuddy 自动生成 · 内容版权归原作者所有 · 摘要经 AI 整理，详见<a href="https://aihot.virxact.com/daily/2026-08-23" target="_blank" rel="noopener noreferrer">原文</a></p>
+    </footer>
+  </div>
+</body>
+</html>
