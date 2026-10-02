@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 日报晨报 · 2026年10月02日</title>
+<style>
+  :root {
+    --bg: #0f1220;
+    --bg2: #151a2e;
+    --card: #1b2238;
+    --card-hover: #222b48;
+    --text: #e8ecf6;
+    --muted: #9aa6c4;
+    --accent: #6ea8fe;
+    --accent2: #b07cff;
+    --chip: #2a3358;
+    --border: #2a3358;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: linear-gradient(160deg, var(--bg), var(--bg2));
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+    padding: 0 0 60px;
+  }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 20px; }
+  /* Hero */
+  .hero {
+    text-align: center;
+    padding: 54px 20px 40px;
+    background: radial-gradient(1200px 400px at 50% -120px, rgba(110,168,254,.22), transparent),
+                radial-gradient(900px 360px at 80% 0, rgba(176,124,255,.18), transparent);
+    border-bottom: 1px solid var(--border);
+  }
+  .hero .kicker {
+    letter-spacing: 4px; font-size: 13px; color: var(--accent);
+    text-transform: uppercase; font-weight: 700;
+  }
+  .hero h1 {
+    font-size: clamp(28px, 5vw, 46px); font-weight: 800; margin: 10px 0 6px;
+    background: linear-gradient(90deg, #fff, var(--accent) 60%, var(--accent2));
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .hero .date-line { color: var(--muted); font-size: 16px; }
+  .hero .total-badge {
+    display: inline-block; margin-top: 16px; padding: 10px 22px; border-radius: 999px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    color: #0b0e1a; font-weight: 800; font-size: 18px;
+  }
+  .hero .window-label { margin-top: 10px; color: var(--muted); font-size: 13px; }
+  /* Stat cards */
+  .stats { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin: 30px 0 10px; }
+  .stat-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+    padding: 18px 12px; text-align: center;
+  }
+  .stat-num { font-size: 30px; font-weight: 800; color: var(--accent); }
+  .stat-label { font-size: 13px; color: var(--muted); margin-top: 4px; }
+  /* Nav */
+  .nav { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 26px 0 6px; position: sticky; top: 0; z-index: 10; padding: 12px 0; backdrop-filter: blur(8px); }
+  .nav-chip {
+    display: inline-flex; align-items: center; gap: 8px; text-decoration: none;
+    background: var(--card); color: var(--text); border: 1px solid var(--border);
+    padding: 8px 14px; border-radius: 999px; font-size: 14px; transition: .2s;
+  }
+  .nav-chip:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .nav-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+  .nav-chip b { color: var(--accent); }
+  /* Sections */
+  .section { margin: 40px 0; }
+  .section-title {
+    display: flex; align-items: center; gap: 12px; font-size: 22px; font-weight: 800;
+    margin-bottom: 18px; scroll-margin-top: 70px;
+  }
+  .section-bar { width: 6px; height: 24px; border-radius: 4px; background: linear-gradient(var(--accent), var(--accent2)); }
+  .section-count { font-size: 14px; color: var(--muted); font-weight: 600; }
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 18px; }
+  .card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+    padding: 18px; display: flex; flex-direction: column; gap: 10px; transition: .2s;
+  }
+  .card:hover { background: var(--card-hover); transform: translateY(-3px); border-color: var(--accent); }
+  .card-head { display: flex; align-items: center; justify-content: space-between; }
+  .card-num {
+    font-weight: 800; color: var(--accent); font-size: 15px;
+    background: var(--chip); padding: 2px 10px; border-radius: 8px;
+  }
+  .src-chip {
+    font-size: 12px; color: var(--muted); background: var(--chip);
+    padding: 4px 10px; border-radius: 999px; border: 1px solid var(--border);
+    max-width: 70%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .card-title { font-size: 17px; line-height: 1.45; }
+  .card-title a { color: var(--text); text-decoration: none; }
+  .card-title a:hover { color: var(--accent); }
+  .card-summary { color: var(--muted); font-size: 14px; flex: 1; }
+  .card-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 12px; }
+  .card-time { color: var(--muted); }
+  .card-link { color: var(--accent); text-decoration: none; white-space: nowrap; font-weight: 600; }
+  .card-link:hover { text-decoration: underline; }
+  /* Footer */
+  .foot { margin-top: 50px; padding-top: 24px; border-top: 1px solid var(--border); color: var(--muted); font-size: 13px; text-align: center; }
+  .foot a { color: var(--accent); text-decoration: none; }
+  @media (max-width: 760px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .hero { padding: 40px 16px 30px; }
+  }
+</style>
+</head>
+<body>
+  <header class="hero">
+    <div class="kicker">AI HOT · 每日晨报</div>
+    <h1>AI 日报仪表盘</h1>
+    <div class="date-line">2026年10月02日 · 星期五</div>
+    <div class="total-badge">今日共 25 条</div>
+    <div class="window-label">数据范围：过去 24 小时 · 数据源：AI HOT (aihot.virxact.com)</div>
+  </header>
+
+  <div class="wrap">
+    <div class="stats">
+      <div class="stat-card"><div class="stat-num">5</div><div class="stat-label">模型发布/更新</div></div><div class="stat-card"><div class="stat-num">10</div><div class="stat-label">产品发布/更新</div></div><div class="stat-card"><div class="stat-num">3</div><div class="stat-label">行业动态</div></div><div class="stat-card"><div class="stat-num">2</div><div class="stat-label">论文研究</div></div><div class="stat-card"><div class="stat-num">5</div><div class="stat-label">技巧与观点</div></div>
+    </div>
+
+    <nav class="nav">
+      <a class="nav-chip" href="#sec-0"><span class="nav-dot"></span>模型发布/更新<b>5</b></a><a class="nav-chip" href="#sec-1"><span class="nav-dot"></span>产品发布/更新<b>10</b></a><a class="nav-chip" href="#sec-2"><span class="nav-dot"></span>行业动态<b>3</b></a><a class="nav-chip" href="#sec-3"><span class="nav-dot"></span>论文研究<b>2</b></a><a class="nav-chip" href="#sec-4"><span class="nav-dot"></span>技巧与观点<b>5</b></a>
+    </nav>
+
+    <section class="section" id="sec-0">
+  <h2 class="section-title"><span class="section-bar"></span>模型发布/更新 <span class="section-count">5</span></h2>
+  <div class="card-grid"><article class="card">
+  <div class="card-head">
+    <span class="card-num">#1</span>
+    <span class="src-chip">X：Artificial Analysis (@ArtificialAnlys)</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/jhshh53c18f71tkzk44izbs25" target="_blank" rel="noopener noreferrer">Artificial Analysis：Claude Sonnet 5.5、GPT-6.1 Sol 与 Gemini 4 Argon 登顶 Coding Agent Index 榜单但成本差异大</a></h3>
+  <p class="card-summary">Artificial Analysis 发布 Coding Agent Index 榜单，Claude Sonnet 5.5 (max) 在 Claude Code 以 68 分居首，但每任务成本最高达…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年10月2日 08:17</span>
+    <a class="card-link" href="https://aihot.news/items/jhshh53c18f71tkzk44izbs25" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#2</span>
+    <span class="src-chip">NVIDIA Blog（RSS）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/rp0ocer4fughonyd9ddfr3r8i" target="_blank" rel="noopener noreferrer">NVIDIA 介绍 Blackwell GPU 如何加速 OpenAI GPT-6 Astra Ultrafast</a></h3>
+  <p class="card-summary">GPT-6 Astra Ultrafast 现已在 OpenAI API 及符合条件的 ChatGPT Work 和 Codex 用户中可用，运行在 NVIDIA Blackwell GPU 上。</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年10月2日 07:44</span>
+    <a class="card-link" href="https://aihot.news/items/rp0ocer4fughonyd9ddfr3r8i" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#3</span>
+    <span class="src-chip">X：Artificial Analysis (@ArtificialAnlys)</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/kaz49j9sbrf1rcugch9d2fdjm" target="_blank" rel="noopener noreferrer">Artificial Analysis 评测：Qwen-Image-2.1 登顶两个 AA-Image 榜单的开源权重模型</a></h3>
+  <p class="card-summary">Artificial Analysis 自行本地部署评测了阿里 9 月 20 日以开源权重发布的 Qwen-Image-2.1，该模型在 AA-Image-T2I v2.0 和 AA-I…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年10月2日 06:43</span>
+    <a class="card-link" href="https://aihot.news/items/kaz49j9sbrf1rcugch9d2fdjm" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#4</span>
+    <span class="src-chip">X：Arena (@arena)</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/fe4cigybkf7nhdwb0il9ggrns" target="_blank" rel="noopener noreferrer">MiMo-V2.6-Pro 和 MiMo-V2.6-Flash 登陆 Agent Arena，分列开源模型第5和第9</a></h3>
+  <p class="card-summary">Arena 宣布 Xiaomi MiMo-V2.6-Pro 和 MiMo-V2.6-Flash 登陆 Agent Arena。Pro 在 8.1K+ 真实智能体会话中净提升 +3.17%，列开源模…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年10月2日 02:57</span>
+    <a class="card-link" href="https://aihot.news/items/fe4cigybkf7nhdwb0il9ggrns" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#5</span>
+    <span class="src-chip">X：Arena (@arena)</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/i7z2cbcv93tg62amct88wqo3f" target="_blank" rel="noopener noreferrer">Claude Sonnet 5.5 (xHigh) 以 1786 分登 Code Arena: WebDev 第 3 名</a></h3>
+  <p class="card-summary">Arena 宣布 Claude Sonnet 5.5（xHigh）进入 Code Arena: WebDev 榜单，以 1786 分排名第 3，距第 2 名 GPT-6 Astra 的 1788 分仅…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年10月2日 00:51</span>
+    <a class="card-link" href="https://aihot.news/items/i7z2cbcv93tg62amct88wqo3f" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article></div>
+</section><section class="section" id="sec-1">
+  <h2 class="section-title"><span class="section-bar"></span>产品发布/更新 <span class="section-count">10</span></h2>
+  <div class="card-grid"><article class="card">
+  <div class="card-head">
+    <span class="card-num">#6</span>
+    <span class="src-chip">Suno：Blog（网页）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/rnjrj40fmm98d9duz9lcuk8u2" target="_blank" rel="noopener noreferrer">Suno 推出 Speech beta：语音与背景音乐一体生成</a></h3>
+  <p class="card-summary">Suno 推出 Speech beta，称其为首个能把语音与原创背景音乐作为一条完整曲目生成的音频模型。用户输入文字并描述想要的声音和音乐…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年10月2日 04:35</span>
+    <a class="card-link" href="https://aihot.news/items/rnjrj40fmm98d9duz9lcuk8u2" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#7</span>
+    <span class="src-chip">X：Krea AI (@krea_ai)</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/uveypxyk0fvw6czfi11nn6tph" target="_blank" rel="noopener noreferrer">FLUX 3 Image 现已登陆 Krea，支持多轮编辑与 4K 生成</a></h3>
+  <p class="card-summary">Krea 宣布 FLUX 3 Image 已上线其平台。新能力包括多轮编辑且不改动其他像素、用 bounding box 排版图像、最高 4K 生成，以及组合…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年10月2日 05:18</span>
+    <a class="card-link" href="https://aihot.news/items/uveypxyk0fvw6czfi11nn6tph" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#8</span>
+    <span class="src-chip">X：OpenRouter (@OpenRouter)</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/x1x0d5mqj4y384t9fcq4415kj" target="_blank" rel="noopener noreferrer">FLUX 3 Image 上线 OpenRouter，支持原生 4K 生成与多参考编辑</a></h3>
+  <p class="card-summary">Black Forest Labs 的 FLUX 3 Image 现已上线 OpenRouter，是支持文生图与多参考编辑的旗舰图像模型，原生可渲染至 4K。原文提到…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年10月2日 04:37</span>
+    <a class="card-link" href="https://aihot.news/items/x1x0d5mqj4y384t9fcq4415kj" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#9</span>
+    <span class="src-chip">Modal 官方工程博客（RSS）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/mxaja99ylejkngzxhp66laxfj" target="_blank" rel="noopener noreferrer">Modal 推出 Sidecars，为 Sandboxes 提供低延迟信任边界</a></h3>
+  <p class="card-summary">Modal 推出 Sidecars（Beta），一种与主 Sandbox 同宿主运行但隔离的可信容器，用于在可信与不可信代码之间建立安全边界。</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年10月1日 08:00</span>
+    <a class="card-link" href="https://aihot.news/items/mxaja99ylejkngzxhp66laxfj" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#10</span>
+    <span class="src-chip">Modal 官方工程博客（RSS）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/xp4uyoz5jrkdo61acen7tu1k6" target="_blank" rel="noopener noreferrer">Modal 发布 VM Sandboxes、Modal Clusters 等多项 Runtime 产品更新</a></h3>
+  <p class="card-summary">Modal 在其首届 Runtime 大会上发布多项产品更新。VM Sandboxes 为 Agent 提供完整 Linux 环境，已在 Linear、Legora。</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年10月1日 08:00</span>
+    <a class="card-link" href="https://aihot.news/items/xp4uyoz5jrkdo61acen7tu1k6" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#11</span>
+    <span class="src-chip">Modal 官方工程博客（RSS）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/rdjmj3nqrje120k46r63xrth4" target="_blank" rel="noopener noreferrer">Modal 正式发布 VM Sandboxes：给 Agent 一台完整的 Linux 虚拟机</a></h3>
+  <p class="card-summary">Modal 宣布 VM Sandboxes 正式 GA，只需设置 runtime=&quot;vm&quot; 即可获得支持 Docker、FUSE 和内核功能的完整 Linux VM，沿用原有 San…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年10月1日 08:00</span>
+    <a class="card-link" href="https://aihot.news/items/rdjmj3nqrje120k46r63xrth4" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#12</span>
+    <span class="src-chip">Claude：Blog（网页）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/qzfc4nrsqe4rk8yxlk16ox6in" target="_blank" rel="noopener noreferrer">Claude Code 推出 mods，可用 TypeScript 函数改写提示词、替换内置功能</a></h3>
+  <p class="card-summary">Anthropic 为 Claude Code 推出 mods，一种小型 TypeScript 函数，可挂接到 Claude Code 的事件流，改写提示词、拦截或重试工具调…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年10月1日 00:00</span>
+    <a class="card-link" href="https://aihot.news/items/qzfc4nrsqe4rk8yxlk16ox6in" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#13</span>
+    <span class="src-chip">X：Claude Devs (@ClaudeDevs)</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/qqvpv4tiarctdrthhbx7447b2" target="_blank" rel="noopener noreferrer">Claude Code 推出 mods 功能，可用 TypeScript 定制行为与 UI</a></h3>
+  <p class="card-summary">Claude Code 推出 mods 功能，支持修改模型行为、自定义 UI 并替换自有功能。用几行 TypeScript 即可编写，也可由 Claude 代为构…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年10月2日 02:08</span>
+    <a class="card-link" href="https://aihot.news/items/qqvpv4tiarctdrthhbx7447b2" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#14</span>
+    <span class="src-chip">Modal 官方工程博客（RSS）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/zbprvsawadktpi8tcqpp6gw4d" target="_blank" rel="noopener noreferrer">Modal Clusters 正式发布，通过 @modal.clustered 提供多节点 GPU 集群</a></h3>
+  <p class="card-summary">Modal 宣布 Modal Clusters 正式可用，通过一个装饰器 @modal.clustered 即可获得多节点集群，节点间经 InfiniBand verbs 通信可…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年10月1日 15:38（AI HOT 收录）</span>
+    <a class="card-link" href="https://aihot.news/items/zbprvsawadktpi8tcqpp6gw4d" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#15</span>
+    <span class="src-chip">X：Tibo (@thsottiaux)</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/ed0fkjtzo2sbnpzqlara60ghs" target="_blank" rel="noopener noreferrer">ChatGPT 现可直接构建并部署 MCP 服务器</a></h3>
+  <p class="card-summary">ChatGPT Sites 现在可以托管 MCP 服务器，用户可直接在 ChatGPT 中构建并部署 MCP 服务器，还能将其转为插件并安装到 web、移动端…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年10月1日 12:44</span>
+    <a class="card-link" href="https://aihot.news/items/ed0fkjtzo2sbnpzqlara60ghs" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article></div>
+</section><section class="section" id="sec-2">
+  <h2 class="section-title"><span class="section-bar"></span>行业动态 <span class="section-count">3</span></h2>
+  <div class="card-grid"><article class="card">
+  <div class="card-head">
+    <span class="card-num">#16</span>
+    <span class="src-chip">IT之家（RSS）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/iw7ix94rgvhp2jgamykh261gl" target="_blank" rel="noopener noreferrer">加州检察长向 OpenAI 发出传票，调查 AI 智能体网络安全风险</a></h3>
+  <p class="card-summary">据路透社报道，加州总检察长邦塔向 OpenAI 发出调查传票，要求其就 AI 模型涉及的网络安全事件和风险提供更多信息。调查背景是今…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年10月2日 08:06</span>
+    <a class="card-link" href="https://aihot.news/items/iw7ix94rgvhp2jgamykh261gl" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#17</span>
+    <span class="src-chip">X：Rohan Paul (@rohanpaul_ai)</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/fe27jbwrn6gfzym6j9q179auw" target="_blank" rel="noopener noreferrer">Google 首次轨道 AI 芯片试验确认在轨运行正常</a></h3>
+  <p class="card-summary">Google 确认其首个轨道 AI 芯片试验已入轨并取得联系，运行符合预期。卫星于 2026 年 10 月 1 日由 SpaceX Falcon 9 Transporter…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年10月2日 08:44</span>
+    <a class="card-link" href="https://aihot.news/items/fe27jbwrn6gfzym6j9q179auw" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#18</span>
+    <span class="src-chip">The Decoder：AI News（RSS）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/uxe9v0hypn93df9ogn6glwled" target="_blank" rel="noopener noreferrer">OpenAI 称拦截蒸馏窃取攻击，但研究者称同样手法在 Azure 上仍可窃取 GPT-6 Astra 等模型的推理内容</a></h3>
+  <p class="card-summary">OpenAI 称 7 月拦截了一起针对其模型推理链的蒸馏窃取活动，7 月 24 至 25 日出现来自超 4000 用户的 16000 次请求，关联账号超…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年10月1日 20:05</span>
+    <a class="card-link" href="https://aihot.news/items/uxe9v0hypn93df9ogn6glwled" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article></div>
+</section><section class="section" id="sec-3">
+  <h2 class="section-title"><span class="section-bar"></span>论文研究 <span class="section-count">2</span></h2>
+  <div class="card-grid"><article class="card">
+  <div class="card-head">
+    <span class="card-num">#19</span>
+    <span class="src-chip">Epoch AI：研究、数据与评测</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/uli2rb6y55e3p9z1rh1t8efld" target="_blank" rel="noopener noreferrer">Epoch AI 推出 ChatGPT usage explorer，基于5000名美国用户三年聊天记录</a></h3>
+  <p class="card-summary">Epoch AI 与 YouGov 合作推出 ChatGPT usage explorer，发布5000名美国 YouGov 样本用户的 ChatGPT 聊天元数据，覆盖约66万对话…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年10月1日 08:00</span>
+    <a class="card-link" href="https://aihot.news/items/uli2rb6y55e3p9z1rh1t8efld" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#20</span>
+    <span class="src-chip">Anthropic：Research（发表成果 · 网页）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/v7l0ugdbh3e8vd157y32mbyby" target="_blank" rel="noopener noreferrer">物理学者 Matthew Schwartz 分享用 Claude 与 BootLoops 做跨学科计算的经验</a></h3>
+  <p class="card-summary">哈佛物理学者 Matthew Schwartz 在 Anthropic 客座文章中提出寻找 Claude-shaped 问题，并开源了用于定量科学精确计算的 BootLoo…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年10月1日 00:00</span>
+    <a class="card-link" href="https://aihot.news/items/v7l0ugdbh3e8vd157y32mbyby" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article></div>
+</section><section class="section" id="sec-4">
+  <h2 class="section-title"><span class="section-bar"></span>技巧与观点 <span class="section-count">5</span></h2>
+  <div class="card-grid"><article class="card">
+  <div class="card-head">
+    <span class="card-num">#21</span>
+    <span class="src-chip">OpenRouter：Announcements（RSS）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/ukk2qw5l1r9jqhsykqai2cf30" target="_blank" rel="noopener noreferrer">OpenRouter 解析 LangChain 与 CrewAI 编排和 OpenRouter 原生路由的差异</a></h3>
+  <p class="card-summary">OpenRouter 发文将多模型编排分为工作流编排、模型路由和提供商路由三层，指出 LangGraph 和 CrewAI 负责工作流编排，OpenRouter…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年10月2日 08:00</span>
+    <a class="card-link" href="https://aihot.news/items/ukk2qw5l1r9jqhsykqai2cf30" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#22</span>
+    <span class="src-chip">Anthropic：Claude.dev 开发者博客（RSS）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/sbvvdrkyjbtob4gp4iwwtyar1" target="_blank" rel="noopener noreferrer">Claude Code mods 入门教程：从零构建 Token Weather 上下文窗口预报插件</a></h3>
+  <p class="card-summary">这篇 Claude Code 官方开发者教程介绍 mods，即以 hooks 形式运行在插件内的 JavaScript 或 TypeScript 模块，可以观察、重写或拒…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年10月1日 20:00</span>
+    <a class="card-link" href="https://aihot.news/items/sbvvdrkyjbtob4gp4iwwtyar1" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#23</span>
+    <span class="src-chip">LangChain：Blog（RSS）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/t6jf7f9e5zbw4sxftwim9wgk7" target="_blank" rel="noopener noreferrer">LangChain 讲解如何在 Agent Harness 中构建模型路由器</a></h3>
+  <p class="card-summary">LangChain 在其开源编码 Agent Open SWE 中构建模型路由器，在 973 个线程的 A/B 测试中，中位成本从 $2.61 降到 $0.94（降 64%）…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年10月2日 01:01</span>
+    <a class="card-link" href="https://aihot.news/items/t6jf7f9e5zbw4sxftwim9wgk7" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#24</span>
+    <span class="src-chip">英国 AI Security Institute：Blog（网页）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/o2r7vlmpw9bg1k7rxb3ot6wzv" target="_blank" rel="noopener noreferrer">英国 AISI 加强安全措施后恢复大部分危险能力评估</a></h3>
+  <p class="card-summary">英国 AI Security Institute 宣布完成第一阶段安全加固工作，恢复大部分此前因智能体在 cyber 评估中越权接触真实系统而暂停的高…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年10月1日 07:00</span>
+    <a class="card-link" href="https://aihot.news/items/o2r7vlmpw9bg1k7rxb3ot6wzv" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#25</span>
+    <span class="src-chip">Ethan Mollick：One Useful Thing（RSS）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/i35lar26hjm4djheowz5ytplm" target="_blank" rel="noopener noreferrer">Ethan Mollick 谈点与群：智能体自组织为何让管理假设失效</a></h3>
+  <p class="card-summary">Ethan Mollick 承认自己此前认为人类需像经理一样精心设计智能体组织的判断错了，Bitter Lesson 同样适用于组织管理。</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年10月1日 18:54</span>
+    <a class="card-link" href="https://aihot.news/items/i35lar26hjm4djheowz5ytplm" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article></div>
+</section>
+
+    <footer class="foot">
+      <p>总条数：25 条 ｜ 数据来源：AI HOT（2026-10-02 日报，公开 v1 API）</p>
+      <p>由 WorkBuddy 自动生成 · 内容版权归原作者所有 · 摘要经 AI 整理，详见<a href="https://aihot.virxact.com/daily/2026-10-02" target="_blank" rel="noopener noreferrer">原文</a></p>
+    </footer>
+  </div>
+</body>
+</html>
