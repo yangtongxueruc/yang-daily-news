@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 日报晨报 · 2026年10月07日</title>
+<style>
+  :root {
+    --bg: #0f1220;
+    --bg2: #151a2e;
+    --card: #1b2238;
+    --card-hover: #222b48;
+    --text: #e8ecf6;
+    --muted: #9aa6c4;
+    --accent: #6ea8fe;
+    --accent2: #b07cff;
+    --chip: #2a3358;
+    --border: #2a3358;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: linear-gradient(160deg, var(--bg), var(--bg2));
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+    padding: 0 0 60px;
+  }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 20px; }
+  /* Hero */
+  .hero {
+    text-align: center;
+    padding: 54px 20px 40px;
+    background: radial-gradient(1200px 400px at 50% -120px, rgba(110,168,254,.22), transparent),
+                radial-gradient(900px 360px at 80% 0, rgba(176,124,255,.18), transparent);
+    border-bottom: 1px solid var(--border);
+  }
+  .hero .kicker {
+    letter-spacing: 4px; font-size: 13px; color: var(--accent);
+    text-transform: uppercase; font-weight: 700;
+  }
+  .hero h1 {
+    font-size: clamp(28px, 5vw, 46px); font-weight: 800; margin: 10px 0 6px;
+    background: linear-gradient(90deg, #fff, var(--accent) 60%, var(--accent2));
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .hero .date-line { color: var(--muted); font-size: 16px; }
+  .hero .total-badge {
+    display: inline-block; margin-top: 16px; padding: 10px 22px; border-radius: 999px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    color: #0b0e1a; font-weight: 800; font-size: 18px;
+  }
+  .hero .window-label { margin-top: 10px; color: var(--muted); font-size: 13px; }
+  /* Stat cards */
+  .stats { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin: 30px 0 10px; }
+  .stat-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+    padding: 18px 12px; text-align: center;
+  }
+  .stat-num { font-size: 30px; font-weight: 800; color: var(--accent); }
+  .stat-label { font-size: 13px; color: var(--muted); margin-top: 4px; }
+  /* Nav */
+  .nav { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 26px 0 6px; position: sticky; top: 0; z-index: 10; padding: 12px 0; backdrop-filter: blur(8px); }
+  .nav-chip {
+    display: inline-flex; align-items: center; gap: 8px; text-decoration: none;
+    background: var(--card); color: var(--text); border: 1px solid var(--border);
+    padding: 8px 14px; border-radius: 999px; font-size: 14px; transition: .2s;
+  }
+  .nav-chip:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .nav-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+  .nav-chip b { color: var(--accent); }
+  /* Sections */
+  .section { margin: 40px 0; }
+  .section-title {
+    display: flex; align-items: center; gap: 12px; font-size: 22px; font-weight: 800;
+    margin-bottom: 18px; scroll-margin-top: 70px;
+  }
+  .section-bar { width: 6px; height: 24px; border-radius: 4px; background: linear-gradient(var(--accent), var(--accent2)); }
+  .section-count { font-size: 14px; color: var(--muted); font-weight: 600; }
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 18px; }
+  .card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+    padding: 18px; display: flex; flex-direction: column; gap: 10px; transition: .2s;
+  }
+  .card:hover { background: var(--card-hover); transform: translateY(-3px); border-color: var(--accent); }
+  .card-head { display: flex; align-items: center; justify-content: space-between; }
+  .card-num {
+    font-weight: 800; color: var(--accent); font-size: 15px;
+    background: var(--chip); padding: 2px 10px; border-radius: 8px;
+  }
+  .src-chip {
+    font-size: 12px; color: var(--muted); background: var(--chip);
+    padding: 4px 10px; border-radius: 999px; border: 1px solid var(--border);
+    max-width: 70%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .card-title { font-size: 17px; line-height: 1.45; }
+  .card-title a { color: var(--text); text-decoration: none; }
+  .card-title a:hover { color: var(--accent); }
+  .card-summary { color: var(--muted); font-size: 14px; flex: 1; }
+  .card-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 12px; }
+  .card-time { color: var(--muted); }
+  .card-link { color: var(--accent); text-decoration: none; white-space: nowrap; font-weight: 600; }
+  .card-link:hover { text-decoration: underline; }
+  /* Footer */
+  .foot { margin-top: 50px; padding-top: 24px; border-top: 1px solid var(--border); color: var(--muted); font-size: 13px; text-align: center; }
+  .foot a { color: var(--accent); text-decoration: none; }
+  @media (max-width: 760px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .hero { padding: 40px 16px 30px; }
+  }
+</style>
+</head>
+<body>
+  <header class="hero">
+    <div class="kicker">AI HOT · 每日晨报</div>
+    <h1>AI 日报仪表盘</h1>
+    <div class="date-line">2026年10月07日 · 星期三</div>
+    <div class="total-badge">今日共 18 条</div>
+    <div class="window-label">数据范围：过去 24 小时 · 数据源：AI HOT (aihot.virxact.com)</div>
+  </header>
+
+  <div class="wrap">
+    <div class="stats">
+      <div class="stat-card"><div class="stat-num">5</div><div class="stat-label">模型发布/更新</div></div><div class="stat-card"><div class="stat-num">4</div><div class="stat-label">产品发布/更新</div></div><div class="stat-card"><div class="stat-num">5</div><div class="stat-label">行业动态</div></div><div class="stat-card"><div class="stat-num">2</div><div class="stat-label">论文研究</div></div><div class="stat-card"><div class="stat-num">2</div><div class="stat-label">技巧与观点</div></div>
+    </div>
+
+    <nav class="nav">
+      <a class="nav-chip" href="#sec-0"><span class="nav-dot"></span>模型发布/更新<b>5</b></a><a class="nav-chip" href="#sec-1"><span class="nav-dot"></span>产品发布/更新<b>4</b></a><a class="nav-chip" href="#sec-2"><span class="nav-dot"></span>行业动态<b>5</b></a><a class="nav-chip" href="#sec-3"><span class="nav-dot"></span>论文研究<b>2</b></a><a class="nav-chip" href="#sec-4"><span class="nav-dot"></span>技巧与观点<b>2</b></a>
+    </nav>
+
+    <section class="section" id="sec-0">
+  <h2 class="section-title"><span class="section-bar"></span>模型发布/更新 <span class="section-count">5</span></h2>
+  <div class="card-grid"><article class="card">
+  <div class="card-head">
+    <span class="card-num">#1</span>
+    <span class="src-chip">Google DeepMind：Blog（RSS）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/g1k2ragppm8j4apj75qu1k4ug" target="_blank" rel="noopener noreferrer">Google DeepMind 发布开源轻量多模态嵌入模型 EmbeddingGemma 2</a></h3>
+  <p class="card-summary">Google DeepMind 发布 EmbeddingGemma 2，基于 Gemma 4 架构，以 Apache 2.0 许可开源，将文本、代码、图像、视频和音频映射到统…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年10月7日 03:57</span>
+    <a class="card-link" href="https://aihot.news/items/g1k2ragppm8j4apj75qu1k4ug" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#2</span>
+    <span class="src-chip">Gemini API：更新日志（网页）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/d17jcexm93lo85zkz3iil08c9" target="_blank" rel="noopener noreferrer">Gemini Nano Banana 2.1 正式发布，gemini-3.1-flash-image 将于 2026 年 10 月 29 日停用</a></h3>
+  <p class="card-summary">Google 发布 Gemini Nano Banana 2.1（gemini-nano-banana-2.1），定位为高效图像生成与对话式编辑模型，是 Nano Banana 2（gemi…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年10月6日 08:00</span>
+    <a class="card-link" href="https://aihot.news/items/d17jcexm93lo85zkz3iil08c9" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#3</span>
+    <span class="src-chip">X：ARC Prize (@arcprize)</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/quya0qxvagwzjaw5wd9ma7vvu" target="_blank" rel="noopener noreferrer">DeepSeek V4.1 Flash 在 ARC-AGI (Verified) 评测中的成绩公布</a></h3>
+  <p class="card-summary">ARC Prize 公布 DeepSeek V4.1 Flash 在 ARC-AGI (Verified) 的成绩：ARC-AGI-2 得分 72.9%，每任务成本 $0.13；ARC-AGI-1 得分…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年10月6日 23:20</span>
+    <a class="card-link" href="https://aihot.news/items/quya0qxvagwzjaw5wd9ma7vvu" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#4</span>
+    <span class="src-chip">X：Arena (@arena)</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/gyfo8loe7gfo6fmgt762027fp" target="_blank" rel="noopener noreferrer">Mistral Large 4 上线 Arena 的 Agent Arena 与 Code Arena 评测</a></h3>
+  <p class="card-summary">Arena 宣布 Mistral 的 Mistral Large 4 现已进入 Agent Arena，用户可前往测试投票，分数稍后公布。该模型为 1T 参数、49B 激活…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年10月6日 22:21</span>
+    <a class="card-link" href="https://aihot.news/items/gyfo8loe7gfo6fmgt762027fp" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#5</span>
+    <span class="src-chip">Artificial Analysis 完整文章（网页）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/rmc5fz5rbcwzsr7cdl5jo1ojk" target="_blank" rel="noopener noreferrer">Mistral 发布 Mistral Large 4，Artificial Analysis 评测称其为美中之外最智能模型</a></h3>
+  <p class="card-summary">Mistral 发布 Mistral Large 4（Research Public Preview），在 Artificial Analysis Intelligence Index 得分 38，与 GPT-6 Lun…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年10月6日 00:00</span>
+    <a class="card-link" href="https://aihot.news/items/rmc5fz5rbcwzsr7cdl5jo1ojk" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article></div>
+</section><section class="section" id="sec-1">
+  <h2 class="section-title"><span class="section-bar"></span>产品发布/更新 <span class="section-count">4</span></h2>
+  <div class="card-grid"><article class="card">
+  <div class="card-head">
+    <span class="card-num">#6</span>
+    <span class="src-chip">Cursor：Changelog（网页）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/wbd0ik8kqdtpjw5u8kjsudqms" target="_blank" rel="noopener noreferrer">Cursor iOS 应用支持远程控制本地智能体</a></h3>
+  <p class="card-summary">Cursor 在 iOS 应用中上线本地智能体远程控制，用户可查看并回复电脑上正在运行的智能体。除企业组织外默认对所有用户开启，登录…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年10月6日 08:00</span>
+    <a class="card-link" href="https://aihot.news/items/wbd0ik8kqdtpjw5u8kjsudqms" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#7</span>
+    <span class="src-chip">Claude：YouTube（RSS）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/sah5vczzr22l9ieb4bxrpoowd" target="_blank" rel="noopener noreferrer">Claude for Google Workspace 开启 beta，可直接在 Docs、Sheets、Slides 中编辑</a></h3>
+  <p class="card-summary">Claude 宣布推出 Claude for Google Workspace（beta），一次安装即可覆盖 Google Docs、Sheets 和 Slides。</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年10月7日 01:02</span>
+    <a class="card-link" href="https://aihot.news/items/sah5vczzr22l9ieb4bxrpoowd" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#8</span>
+    <span class="src-chip">Google Developers Blog（RSS）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/arlkhdtjzshqi1qdyowqvtwyy" target="_blank" rel="noopener noreferrer">Google DeepMind 发布多模态嵌入模型 EmbeddingGemma 2</a></h3>
+  <p class="card-summary">Google DeepMind 于 10 月 6 日发布开放权重的多模态嵌入模型 EmbeddingGemma 2，将文本、图像、视频帧和音频映射到统一向量空间…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年10月6日 08:00</span>
+    <a class="card-link" href="https://aihot.news/items/arlkhdtjzshqi1qdyowqvtwyy" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#9</span>
+    <span class="src-chip">X：OpenRouter (@OpenRouter)</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/z94jsbcn3hkyiagdyb9wai8sm" target="_blank" rel="noopener noreferrer">Mistral Large 4 上线 OpenRouter 公测：1T 参数、512K 上下文</a></h3>
+  <p class="card-summary">Mistral Large 4 现已在 OpenRouter 开放公测，规格为 1T 参数（49B 激活）、原生多模态、512K 上下文、最高 256K 输出。前两周五…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年10月6日 22:02</span>
+    <a class="card-link" href="https://aihot.news/items/z94jsbcn3hkyiagdyb9wai8sm" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article></div>
+</section><section class="section" id="sec-2">
+  <h2 class="section-title"><span class="section-bar"></span>行业动态 <span class="section-count">5</span></h2>
+  <div class="card-grid"><article class="card">
+  <div class="card-head">
+    <span class="card-num">#10</span>
+    <span class="src-chip">GitHub Blog</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/iq15z1msend1ocusxt2phyms7" target="_blank" rel="noopener noreferrer">GitHub 重建 Git 基础设施，应对智能体规模开发</a></h3>
+  <p class="card-summary">GitHub 宣布重建 Git 基础设施，以支持智能体规模开发带来的高并发读写负载。2026 年 8 月 GitHub 月度 Git 事件量达 473.3 bill…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年10月7日 04:57</span>
+    <a class="card-link" href="https://aihot.news/items/iq15z1msend1ocusxt2phyms7" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#11</span>
+    <span class="src-chip">Sierra：Blog（RSS）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/ktjti7hbm1gor33jpoc6ghili" target="_blank" rel="noopener noreferrer">Sierra 与 Meta 联合多家企业发布 Personal Agent Protocol 开放协议</a></h3>
+  <p class="card-summary">Sierra 与 Meta 联合 Genesys、Instinct、Rocket、Shopify、Stripe、Walmart 等伙伴宣布开发 Personal Agent Protocol，一个定义…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年10月7日 01:32</span>
+    <a class="card-link" href="https://aihot.news/items/ktjti7hbm1gor33jpoc6ghili" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#12</span>
+    <span class="src-chip">Latent Space（RSS）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/krivwcmcv6qloa3az7f5j0jip" target="_blank" rel="noopener noreferrer">Reflection 发布 501B-A23B 开源编码模型 Beam</a></h3>
+  <p class="card-summary">Reflection 发布文本-only 的 501B 总参数 / 23B 激活 MoE 模型 Beam，面向编码、智能体和科学任务，从零训练，完整权重将在本月…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年10月6日 14:28</span>
+    <a class="card-link" href="https://aihot.news/items/krivwcmcv6qloa3az7f5j0jip" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#13</span>
+    <span class="src-chip">X：X.PIN (@thexpin)</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/wbi0gsddrrfnavs6vvuqb2r7j" target="_blank" rel="noopener noreferrer">DeepSeek 据报道接近完成至少 800 亿元融资，腾讯与宁德时代参与</a></h3>
+  <p class="card-summary">据 Bloomberg 援引知情人士报道，DeepSeek 接近完成至少 800 亿元（约 120 亿美元）融资，高于原定约 500 亿元的目标。腾讯和电池…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年10月7日 01:32</span>
+    <a class="card-link" href="https://aihot.news/items/wbi0gsddrrfnavs6vvuqb2r7j" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#14</span>
+    <span class="src-chip">X：Rohan Paul (@rohanpaul_ai)</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/nnl0kba78980jig0szh0hkfop" target="_blank" rel="noopener noreferrer">Anthropic 5180亿美元计算力支出中约4137亿美元无论使用与否都需支付</a></h3>
+  <p class="card-summary">Anthropic 计划未来数年在云计算和计算力上支出 5180 亿美元，其中约 4137 亿美元为不可撤销承诺，即使容量闲置也需支付，平均每…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年10月6日 13:47</span>
+    <a class="card-link" href="https://aihot.news/items/nnl0kba78980jig0szh0hkfop" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article></div>
+</section><section class="section" id="sec-3">
+  <h2 class="section-title"><span class="section-bar"></span>论文研究 <span class="section-count">2</span></h2>
+  <div class="card-grid"><article class="card">
+  <div class="card-head">
+    <span class="card-num">#15</span>
+    <span class="src-chip">OpenAI：官网动态（RSS · 排除企业/客户案例）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/zvw2i4tg1gnqq72t596vpqoyl" target="_blank" rel="noopener noreferrer">OpenAI 发布内部前沿模型产出的数学研究成果</a></h3>
+  <p class="card-summary">OpenAI 发布一批由内部前沿模型产出的新数学成果，成果以 GitHub 仓库形式公开，并附论文修订与引用协议，其中许多证明已用 Lean…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年10月7日 07:01</span>
+    <a class="card-link" href="https://aihot.news/items/zvw2i4tg1gnqq72t596vpqoyl" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#16</span>
+    <span class="src-chip">METR：Blog（网页）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/s3bsk24s6z9jxpbv5p7ju67xz" target="_blank" rel="noopener noreferrer">METR 演示 AI 智能体如何篡改 Inspect 评估记录以掩盖不当行为</a></h3>
+  <p class="card-summary">METR 发布分析，指出当前 AI 失准行为仍在推理轨迹和日志中留下大量证据，但未来智能体可能篡改人类用来审查它们的可观测性系统…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年10月6日 00:00</span>
+    <a class="card-link" href="https://aihot.news/items/s3bsk24s6z9jxpbv5p7ju67xz" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article></div>
+</section><section class="section" id="sec-4">
+  <h2 class="section-title"><span class="section-bar"></span>技巧与观点 <span class="section-count">2</span></h2>
+  <div class="card-grid"><article class="card">
+  <div class="card-head">
+    <span class="card-num">#17</span>
+    <span class="src-chip">Anthropic：Claude.dev 开发者博客（RSS）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/sxr71auxicu8uk3e4bqxol02h" target="_blank" rel="noopener noreferrer">Claude Code 云端会话实战指南：每个任务独占一台 VM，可并行跑任务并以分支收尾</a></h3>
+  <p class="card-summary">Claude Code 推出云端会话：每个任务在独立 VM 上运行，仓库克隆到新分支，可从 claude.ai/code、手机、Desktop、终端和 Slack 启…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年10月6日 20:00</span>
+    <a class="card-link" href="https://aihot.news/items/sxr71auxicu8uk3e4bqxol02h" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#18</span>
+    <span class="src-chip">Tomasz Tunguz 博客（VC 分析）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/clggowmf6nncm154a78nnizft" target="_blank" rel="noopener noreferrer">Vercel COO 讲解如何用 Agent 自动化 Inbound 销售</a></h3>
+  <p class="card-summary">Vercel COO Jeanne DeWitt Grosser 在 Tom Tunguz 的 Office Hours 节目中讲解团队如何搭建运行销售漏斗顶端的 Agent。</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年10月6日 08:00</span>
+    <a class="card-link" href="https://aihot.news/items/clggowmf6nncm154a78nnizft" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article></div>
+</section>
+
+    <footer class="foot">
+      <p>总条数：18 条 ｜ 数据来源：AI HOT（2026-10-07 日报，公开 v1 API）</p>
+      <p>由 WorkBuddy 自动生成 · 内容版权归原作者所有 · 摘要经 AI 整理，详见<a href="https://aihot.virxact.com/daily/2026-10-07" target="_blank" rel="noopener noreferrer">原文</a></p>
+    </footer>
+  </div>
+</body>
+</html>
