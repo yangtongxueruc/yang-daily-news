@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 日报晨报 · 2026年11月10日</title>
+<style>
+  :root {
+    --bg: #0f1220;
+    --bg2: #151a2e;
+    --card: #1b2238;
+    --card-hover: #222b48;
+    --text: #e8ecf6;
+    --muted: #9aa6c4;
+    --accent: #6ea8fe;
+    --accent2: #b07cff;
+    --chip: #2a3358;
+    --border: #2a3358;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: linear-gradient(160deg, var(--bg), var(--bg2));
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+    padding: 0 0 60px;
+  }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 20px; }
+  /* Hero */
+  .hero {
+    text-align: center;
+    padding: 54px 20px 40px;
+    background: radial-gradient(1200px 400px at 50% -120px, rgba(110,168,254,.22), transparent),
+                radial-gradient(900px 360px at 80% 0, rgba(176,124,255,.18), transparent);
+    border-bottom: 1px solid var(--border);
+  }
+  .hero .kicker {
+    letter-spacing: 4px; font-size: 13px; color: var(--accent);
+    text-transform: uppercase; font-weight: 700;
+  }
+  .hero h1 {
+    font-size: clamp(28px, 5vw, 46px); font-weight: 800; margin: 10px 0 6px;
+    background: linear-gradient(90deg, #fff, var(--accent) 60%, var(--accent2));
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .hero .date-line { color: var(--muted); font-size: 16px; }
+  .hero .total-badge {
+    display: inline-block; margin-top: 16px; padding: 10px 22px; border-radius: 999px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    color: #0b0e1a; font-weight: 800; font-size: 18px;
+  }
+  .hero .window-label { margin-top: 10px; color: var(--muted); font-size: 13px; }
+  /* Stat cards */
+  .stats { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin: 30px 0 10px; }
+  .stat-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+    padding: 18px 12px; text-align: center;
+  }
+  .stat-num { font-size: 30px; font-weight: 800; color: var(--accent); }
+  .stat-label { font-size: 13px; color: var(--muted); margin-top: 4px; }
+  /* Nav */
+  .nav { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 26px 0 6px; position: sticky; top: 0; z-index: 10; padding: 12px 0; backdrop-filter: blur(8px); }
+  .nav-chip {
+    display: inline-flex; align-items: center; gap: 8px; text-decoration: none;
+    background: var(--card); color: var(--text); border: 1px solid var(--border);
+    padding: 8px 14px; border-radius: 999px; font-size: 14px; transition: .2s;
+  }
+  .nav-chip:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .nav-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+  .nav-chip b { color: var(--accent); }
+  /* Sections */
+  .section { margin: 40px 0; }
+  .section-title {
+    display: flex; align-items: center; gap: 12px; font-size: 22px; font-weight: 800;
+    margin-bottom: 18px; scroll-margin-top: 70px;
+  }
+  .section-bar { width: 6px; height: 24px; border-radius: 4px; background: linear-gradient(var(--accent), var(--accent2)); }
+  .section-count { font-size: 14px; color: var(--muted); font-weight: 600; }
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 18px; }
+  .card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+    padding: 18px; display: flex; flex-direction: column; gap: 10px; transition: .2s;
+  }
+  .card:hover { background: var(--card-hover); transform: translateY(-3px); border-color: var(--accent); }
+  .card-head { display: flex; align-items: center; justify-content: space-between; }
+  .card-num {
+    font-weight: 800; color: var(--accent); font-size: 15px;
+    background: var(--chip); padding: 2px 10px; border-radius: 8px;
+  }
+  .src-chip {
+    font-size: 12px; color: var(--muted); background: var(--chip);
+    padding: 4px 10px; border-radius: 999px; border: 1px solid var(--border);
+    max-width: 70%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .card-title { font-size: 17px; line-height: 1.45; }
+  .card-title a { color: var(--text); text-decoration: none; }
+  .card-title a:hover { color: var(--accent); }
+  .card-summary { color: var(--muted); font-size: 14px; flex: 1; }
+  .card-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 12px; }
+  .card-time { color: var(--muted); }
+  .card-link { color: var(--accent); text-decoration: none; white-space: nowrap; font-weight: 600; }
+  .card-link:hover { text-decoration: underline; }
+  /* Footer */
+  .foot { margin-top: 50px; padding-top: 24px; border-top: 1px solid var(--border); color: var(--muted); font-size: 13px; text-align: center; }
+  .foot a { color: var(--accent); text-decoration: none; }
+  @media (max-width: 760px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .hero { padding: 40px 16px 30px; }
+  }
+</style>
+</head>
+<body>
+  <header class="hero">
+    <div class="kicker">AI HOT · 每日晨报</div>
+    <h1>AI 日报仪表盘</h1>
+    <div class="date-line">2026年11月10日 · 星期二</div>
+    <div class="total-badge">今日共 15 条</div>
+    <div class="window-label">数据范围：过去 24 小时 · 数据源：AI HOT (aihot.virxact.com)</div>
+  </header>
+
+  <div class="wrap">
+    <div class="stats">
+      <div class="stat-card"><div class="stat-num">7</div><div class="stat-label">模型发布/更新</div></div><div class="stat-card"><div class="stat-num">3</div><div class="stat-label">产品发布/更新</div></div><div class="stat-card"><div class="stat-num">2</div><div class="stat-label">行业动态</div></div><div class="stat-card"><div class="stat-num">2</div><div class="stat-label">论文研究</div></div><div class="stat-card"><div class="stat-num">1</div><div class="stat-label">技巧与观点</div></div>
+    </div>
+
+    <nav class="nav">
+      <a class="nav-chip" href="#sec-0"><span class="nav-dot"></span>模型发布/更新<b>7</b></a><a class="nav-chip" href="#sec-1"><span class="nav-dot"></span>产品发布/更新<b>3</b></a><a class="nav-chip" href="#sec-2"><span class="nav-dot"></span>行业动态<b>2</b></a><a class="nav-chip" href="#sec-3"><span class="nav-dot"></span>论文研究<b>2</b></a><a class="nav-chip" href="#sec-4"><span class="nav-dot"></span>技巧与观点<b>1</b></a>
+    </nav>
+
+    <section class="section" id="sec-0">
+  <h2 class="section-title"><span class="section-bar"></span>模型发布/更新 <span class="section-count">7</span></h2>
+  <div class="card-grid"><article class="card">
+  <div class="card-head">
+    <span class="card-num">#1</span>
+    <span class="src-chip">公众号：数字生命卡兹克</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/po2cdt1whxfqyfew3e81l8mb0" target="_blank" rel="noopener noreferrer">实测 Claude Fable 5.2：一次直出视频与 3D 网页，审美与细节表现突出</a></h3>
+  <p class="card-summary">Anthropic 凌晨正式发布 Claude Fable 5.2，作者第一时间实测视频动效、Three.js 3D 场景和苹果静安店 3D 网页等 10 个任务，全部…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年11月10日 07:21</span>
+    <a class="card-link" href="https://aihot.news/items/po2cdt1whxfqyfew3e81l8mb0" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#2</span>
+    <span class="src-chip">Zyphra Research（网页）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/r5h0cwwdh1peqbg2rk6k9ljrh" target="_blank" rel="noopener noreferrer">Zyphra 发布开源 TTS 模型 ZONOS3-Mini，可在手机浏览器实时运行</a></h3>
+  <p class="card-summary">Zyphra 发布 ZONOS3-Mini，一个 Apache 2.0 开源的零样本语音克隆 TTS 模型，采用稀疏 MoE 架构，总参数 8 亿、活跃参数 1 亿，在…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年11月9日 00:00</span>
+    <a class="card-link" href="https://aihot.news/items/r5h0cwwdh1peqbg2rk6k9ljrh" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#3</span>
+    <span class="src-chip">X：Artificial Analysis (@ArtificialAnlys)</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/m23i0fgxrk1t2gqysu6mqv82s" target="_blank" rel="noopener noreferrer">Artificial Analysis 评测 Claude Fable 5.2：以 65 分登顶 Intelligence Index v5</a></h3>
+  <p class="card-summary">Artificial Analysis 评测 Anthropic 发布的 Claude Fable 5.2，其在 Artificial Analysis Intelligence Index v5 以 65 分登顶…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年11月10日 03:45</span>
+    <a class="card-link" href="https://aihot.news/items/m23i0fgxrk1t2gqysu6mqv82s" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#4</span>
+    <span class="src-chip">Claude：YouTube（RSS）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/rxx1qxfjfuioem95lr868hhwq" target="_blank" rel="noopener noreferrer">Claude Mythos 5.2 预测基因治疗载体 AAV 衣壳结构</a></h3>
+  <p class="card-summary">Claude 官方视频介绍 Claude Mythos 5.2 预测了完整 AAV 衣壳结构，即用于递送基因治疗的蛋白质外壳。模型编写代码在相邻五链分组…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年11月10日 02:56</span>
+    <a class="card-link" href="https://aihot.news/items/rxx1qxfjfuioem95lr868hhwq" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#5</span>
+    <span class="src-chip">Anthropic：Newsroom（网页）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/va9trgwaw3r4por6vdqbjxrhd" target="_blank" rel="noopener noreferrer">Anthropic 发布 Claude Fable 5.2 与 Claude Mythos 5.2</a></h3>
+  <p class="card-summary">Anthropic 发布 Claude Fable 5.2 和 Claude Mythos 5.2，两者为同一底层模型，Mythos 需通过 Cyber 或 Life Sciences Verificat…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年11月9日 00:00</span>
+    <a class="card-link" href="https://aihot.news/items/va9trgwaw3r4por6vdqbjxrhd" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#6</span>
+    <span class="src-chip">Meta AI：Research Blog（网页）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/cox936nwax49rkiimi1oicgzu" target="_blank" rel="noopener noreferrer">Meta 发布最小最高效模型 Muse Ember，主打智能体高频任务</a></h3>
+  <p class="card-summary">Meta 发布 Muse Ember（muse-ember-1.0），定位最小最高效的复杂推理执行模型，面向工具调用、编码子任务、路由、抽取和长文档解…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年11月9日 15:00</span>
+    <a class="card-link" href="https://aihot.news/items/cox936nwax49rkiimi1oicgzu" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#7</span>
+    <span class="src-chip">字节 Seed：Research Feed（网页内嵌数据）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/xsvt2hlwuovul9sdvazcw7cxk" target="_blank" rel="noopener noreferrer">字节发布 Seedream 5.5 图像创作模型：支持 100 轮编辑与原生 RGBA 透明输出</a></h3>
+  <p class="card-summary">字节 Seed 发布新一代图像创作模型 Seedream 5.5，带来三项升级：非编辑区域像素级保持、支持围绕同一作品多达 100 轮连续编辑…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年11月9日 00:00</span>
+    <a class="card-link" href="https://aihot.news/items/xsvt2hlwuovul9sdvazcw7cxk" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article></div>
+</section><section class="section" id="sec-1">
+  <h2 class="section-title"><span class="section-bar"></span>产品发布/更新 <span class="section-count">3</span></h2>
+  <div class="card-grid"><article class="card">
+  <div class="card-head">
+    <span class="card-num">#8</span>
+    <span class="src-chip">X：Higgsfield AI (@higgsfield)</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/ugn21ui1m8kftffpe2c95qlkx" target="_blank" rel="noopener noreferrer">Claude Fable 5.2 上线 Higgsfield，开放 3 天免费试用</a></h3>
+  <p class="card-summary">Higgsfield 宣布 Claude Fable 5.2 已在 Higgsfield MCP 上线，提供 3 天免费不限量使用全部顶级视频和图像模型。作者称该 Anthr…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年11月10日 04:06</span>
+    <a class="card-link" href="https://aihot.news/items/ugn21ui1m8kftffpe2c95qlkx" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#9</span>
+    <span class="src-chip">X：Cognition (@cognition)</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/rth7pxd3xqp2zkd2e1psjgtbl" target="_blank" rel="noopener noreferrer">Claude Fable 5.2 上线 Devin Desktop 和 Devin CLI</a></h3>
+  <p class="card-summary">Cognition 宣布 Claude Fable 5.2 现已在 Devin Desktop 和 Devin CLI 中可用。该模型在 FrontierCode 2.0 上以 49.1 分排名第一…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年11月10日 03:09</span>
+    <a class="card-link" href="https://aihot.news/items/rth7pxd3xqp2zkd2e1psjgtbl" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#10</span>
+    <span class="src-chip">百度文心 ERNIE 官方博客</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/h6vimc0xpjwbjfampr34ym5ol" target="_blank" rel="noopener noreferrer">百度发布 ERNIE Evolve 自动研究系统，公开任务超最好纪录并落地 ERNIE-5.5-Flash 推理优化</a></h3>
+  <p class="card-summary">百度文心团队发布自动研究系统 ERNIE Evolve，用双层循环组织研究方向选择与实验迭代，由 Director、Selector、Executor、Evalua…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年11月9日 00:00</span>
+    <a class="card-link" href="https://aihot.news/items/h6vimc0xpjwbjfampr34ym5ol" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article></div>
+</section><section class="section" id="sec-2">
+  <h2 class="section-title"><span class="section-bar"></span>行业动态 <span class="section-count">2</span></h2>
+  <div class="card-grid"><article class="card">
+  <div class="card-head">
+    <span class="card-num">#11</span>
+    <span class="src-chip">TechCrunch：AI（RSS）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/zqvokl37rwbvoxzfk3c2v7964" target="_blank" rel="noopener noreferrer">做空机构 Culper Research 曾在丑闻爆发前六个月提示 Nvidia CEO 与疑似中国间谍的关系</a></h3>
+  <p class="card-summary">Nvidia 间谍丑闻爆发前六个月，做空机构 Culper Research 已在 5 月 13 日报告中质疑 CEO 黄仁勋与 Megaspeed 高管 Alice Huang…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年11月10日 06:46</span>
+    <a class="card-link" href="https://aihot.news/items/zqvokl37rwbvoxzfk3c2v7964" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#12</span>
+    <span class="src-chip">The Decoder：AI News（RSS）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/e17dl64mjiov57c0jtwn41bxd" target="_blank" rel="noopener noreferrer">Nvidia CEO 黄仁勋婚外情风波削弱其对严格 AI 芯片出口管制的游说</a></h3>
+  <p class="card-summary">据 Bloomberg 报道，Nvidia CEO 黄仁勋在全员备忘录中承认与被美国情报机构认定为疑似中国情报人员线人的 Alice Huang（Huang Le…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年11月9日 19:38</span>
+    <a class="card-link" href="https://aihot.news/items/e17dl64mjiov57c0jtwn41bxd" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article></div>
+</section><section class="section" id="sec-3">
+  <h2 class="section-title"><span class="section-bar"></span>论文研究 <span class="section-count">2</span></h2>
+  <div class="card-grid"><article class="card">
+  <div class="card-head">
+    <span class="card-num">#13</span>
+    <span class="src-chip">Anthropic：Research（发表成果 · 网页）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/xmqflr9ja0pipwyibtqnf8qsj" target="_blank" rel="noopener noreferrer">Anthropic 测试 Claude Fable 5.2 端到端设计三种电子设备并制作可用原型</a></h3>
+  <p class="card-summary">Anthropic 与 Diode Computers 合作，让 Claude Fable 5.2 从简单提示词出发完成免提音箱、语音助手中枢和电子宠物三种设备的设计…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年11月9日 00:00</span>
+    <a class="card-link" href="https://aihot.news/items/xmqflr9ja0pipwyibtqnf8qsj" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#14</span>
+    <span class="src-chip">Anthropic：Claude.dev 开发者博客（RSS）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/y0m3p1gin2dlfm4ns7gsrkvr8" target="_blank" rel="noopener noreferrer">Anthropic 用 1000 个 Claude Fable 5.2 智能体在沙箱内复现费马大定理形式化证明</a></h3>
+  <p class="card-summary">Anthropic 的玩具实验中，1000 个运行 Claude Fable 5.2 早期版本的智能体在无 Prove2Me 平台和研究者指导的情况下复现了费马大定…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年11月9日 20:00</span>
+    <a class="card-link" href="https://aihot.news/items/y0m3p1gin2dlfm4ns7gsrkvr8" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article></div>
+</section><section class="section" id="sec-4">
+  <h2 class="section-title"><span class="section-bar"></span>技巧与观点 <span class="section-count">1</span></h2>
+  <div class="card-grid"><article class="card">
+  <div class="card-head">
+    <span class="card-num">#15</span>
+    <span class="src-chip">Anthropic：Claude.dev 开发者博客（RSS）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/ykrvgcox3whsx6tst5qesbf62" target="_blank" rel="noopener noreferrer">Anthropic 指南：Claude 开发该选 Haiku 5.5、Sonnet 5.5、Opus 5.5 还是 Fable 5.2</a></h3>
+  <p class="card-summary">Anthropic 开发者博客发文指导开发者如何在 Haiku 5.5、Sonnet 5.5、Opus 5.5 和 Fable 5.2 之间选型，建议多数编码和知识工作从…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年11月9日 20:00</span>
+    <a class="card-link" href="https://aihot.news/items/ykrvgcox3whsx6tst5qesbf62" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article></div>
+</section>
+
+    <footer class="foot">
+      <p>总条数：15 条 ｜ 数据来源：AI HOT（2026-11-10 日报，公开 v1 API）</p>
+      <p>由 WorkBuddy 自动生成 · 内容版权归原作者所有 · 摘要经 AI 整理，详见<a href="https://aihot.virxact.com/daily/2026-11-10" target="_blank" rel="noopener noreferrer">原文</a></p>
+    </footer>
+  </div>
+</body>
+</html>
