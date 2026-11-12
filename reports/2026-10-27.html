@@ -5,112 +5,122 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI 日报晨报 · 2026年10月27日</title>
 <style>
-  :root {
-    --bg: #0f1220;
-    --bg2: #151a2e;
-    --card: #1b2238;
-    --card-hover: #222b48;
-    --text: #e8ecf6;
-    --muted: #9aa6c4;
-    --accent: #6ea8fe;
-    --accent2: #b07cff;
-    --chip: #2a3358;
-    --border: #2a3358;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
-    background: linear-gradient(160deg, var(--bg), var(--bg2));
-    color: var(--text);
-    line-height: 1.6;
-    min-height: 100vh;
-    padding: 0 0 60px;
-  }
-  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 20px; }
-  /* Hero */
-  .hero {
-    text-align: center;
-    padding: 54px 20px 40px;
-    background: radial-gradient(1200px 400px at 50% -120px, rgba(110,168,254,.22), transparent),
-                radial-gradient(900px 360px at 80% 0, rgba(176,124,255,.18), transparent);
-    border-bottom: 1px solid var(--border);
-  }
-  .hero .kicker {
-    letter-spacing: 4px; font-size: 13px; color: var(--accent);
-    text-transform: uppercase; font-weight: 700;
-  }
-  .hero h1 {
-    font-size: clamp(28px, 5vw, 46px); font-weight: 800; margin: 10px 0 6px;
-    background: linear-gradient(90deg, #fff, var(--accent) 60%, var(--accent2));
-    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
-  }
-  .hero .date-line { color: var(--muted); font-size: 16px; }
-  .hero .total-badge {
-    display: inline-block; margin-top: 16px; padding: 10px 22px; border-radius: 999px;
-    background: linear-gradient(90deg, var(--accent), var(--accent2));
-    color: #0b0e1a; font-weight: 800; font-size: 18px;
-  }
-  .hero .window-label { margin-top: 10px; color: var(--muted); font-size: 13px; }
-  /* Stat cards */
-  .stats { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin: 30px 0 10px; }
-  .stat-card {
-    background: var(--card); border: 1px solid var(--border); border-radius: 14px;
-    padding: 18px 12px; text-align: center;
-  }
-  .stat-num { font-size: 30px; font-weight: 800; color: var(--accent); }
-  .stat-label { font-size: 13px; color: var(--muted); margin-top: 4px; }
-  /* Nav */
-  .nav { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 26px 0 6px; position: sticky; top: 0; z-index: 10; padding: 12px 0; backdrop-filter: blur(8px); }
-  .nav-chip {
-    display: inline-flex; align-items: center; gap: 8px; text-decoration: none;
-    background: var(--card); color: var(--text); border: 1px solid var(--border);
-    padding: 8px 14px; border-radius: 999px; font-size: 14px; transition: .2s;
-  }
-  .nav-chip:hover { border-color: var(--accent); transform: translateY(-2px); }
-  .nav-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
-  .nav-chip b { color: var(--accent); }
-  /* Sections */
-  .section { margin: 40px 0; }
-  .section-title {
-    display: flex; align-items: center; gap: 12px; font-size: 22px; font-weight: 800;
-    margin-bottom: 18px; scroll-margin-top: 70px;
-  }
-  .section-bar { width: 6px; height: 24px; border-radius: 4px; background: linear-gradient(var(--accent), var(--accent2)); }
-  .section-count { font-size: 14px; color: var(--muted); font-weight: 600; }
-  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 18px; }
-  .card {
-    background: var(--card); border: 1px solid var(--border); border-radius: 16px;
-    padding: 18px; display: flex; flex-direction: column; gap: 10px; transition: .2s;
-  }
-  .card:hover { background: var(--card-hover); transform: translateY(-3px); border-color: var(--accent); }
-  .card-head { display: flex; align-items: center; justify-content: space-between; }
-  .card-num {
-    font-weight: 800; color: var(--accent); font-size: 15px;
-    background: var(--chip); padding: 2px 10px; border-radius: 8px;
-  }
-  .src-chip {
-    font-size: 12px; color: var(--muted); background: var(--chip);
-    padding: 4px 10px; border-radius: 999px; border: 1px solid var(--border);
-    max-width: 70%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-  }
-  .card-title { font-size: 17px; line-height: 1.45; }
-  .card-title a { color: var(--text); text-decoration: none; }
-  .card-title a:hover { color: var(--accent); }
-  .card-summary { color: var(--muted); font-size: 14px; flex: 1; }
-  .card-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 12px; }
-  .card-time { color: var(--muted); }
-  .card-link { color: var(--accent); text-decoration: none; white-space: nowrap; font-weight: 600; }
-  .card-link:hover { text-decoration: underline; }
-  /* Footer */
-  .foot { margin-top: 50px; padding-top: 24px; border-top: 1px solid var(--border); color: var(--muted); font-size: 13px; text-align: center; }
-  .foot a { color: var(--accent); text-decoration: none; }
-  @media (max-width: 760px) {
-    .stats { grid-template-columns: repeat(2, 1fr); }
-    .hero { padding: 40px 16px 30px; }
-  }
+:root{
+  --bg:#0e1116; --bg-2:#141821; --surface:#171c26; --surface-2:#1d2430;
+  --border:#283041; --border-strong:#39445c; --ink:#f3f6fc; --muted:#9aa4b6;
+  --muted-2:#6e778c; --accent:#ff8a4c; --accent-2:#ffb37a;
+  --accent-soft:rgba(255,138,76,.14); --accent-line:rgba(255,138,76,.55);
+  --radius:14px; --radius-sm:10px; --maxw:1140px;
+  --font:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--bg);color:var(--ink);line-height:1.62;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+a{color:inherit}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+.skip{position:absolute;left:-9999px;top:auto}
+.skip:focus{left:16px;top:12px;background:var(--accent);color:#1c1206;padding:9px 15px;
+  border-radius:9px;z-index:200;font-weight:700;text-decoration:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+
+/* Hero */
+.hero{position:relative;overflow:hidden;padding:96px 24px 66px;text-align:center;
+  border-bottom:1px solid var(--border)}
+.hero::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(880px 380px at 50% -170px,var(--accent-soft),transparent 70%)}
+.hero .wrap{position:relative}
+.kicker{letter-spacing:.30em;font-size:12px;font-weight:700;color:var(--accent);
+  text-transform:uppercase}
+.hero h1{font-size:clamp(34px,6vw,58px);font-weight:800;letter-spacing:-.02em;
+  margin:16px 0 10px;line-height:1.05}
+.hero .date-line{color:var(--muted);font-size:17px}
+.total-badge{display:inline-block;margin-top:24px;padding:13px 28px;border-radius:999px;
+  background:var(--surface-2);border:1px solid var(--border-strong);font-weight:800;font-size:18px}
+.total-badge b{color:var(--accent)}
+.window-label{margin-top:16px;color:var(--muted-2);font-size:13px}
+.hero .kicker,.hero h1,.hero .date-line,.hero .total-badge,.hero .window-label{
+  animation:rise .7s cubic-bezier(.2,.7,.2,1) both}
+.hero h1{animation-delay:.05s}.hero .date-line{animation-delay:.11s}
+.hero .total-badge{animation-delay:.17s}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+/* Stats */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:36px 0 6px}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:20px 12px;text-align:center;transition:border-color .2s,transform .2s}
+.stat-card:hover{border-color:var(--border-strong);transform:translateY(-2px)}
+.stat-num{font-size:30px;font-weight:800;color:var(--accent);letter-spacing:-.01em}
+.stat-label{font-size:13px;color:var(--muted);margin-top:6px;line-height:1.35}
+
+/* Nav */
+.nav{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;position:sticky;top:0;z-index:30;
+  padding:14px 0;margin-top:28px;background:rgba(14,17,22,.74);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border)}
+.nav-chip{display:inline-flex;align-items:center;gap:8px;text-decoration:none;background:var(--surface);
+  color:var(--ink);border:1px solid var(--border);padding:9px 15px;border-radius:999px;font-size:14px;
+  transition:border-color .2s,transform .15s,color .2s}
+.nav-chip:hover{border-color:var(--accent);transform:translateY(-2px);color:#fff}
+.nav-chip:active{transform:translateY(0)}
+.nav-dot{width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.nav-chip b{color:var(--accent);font-variant-numeric:tabular-nums}
+
+/* Sections */
+.section{margin:48px 0;scroll-margin-top:82px}
+.section-title{display:flex;align-items:center;gap:12px;font-size:23px;font-weight:800;margin-bottom:22px;
+  letter-spacing:-.01em}
+.section-bar{width:6px;height:25px;border-radius:4px;background:var(--accent)}
+.section-count{font-size:14px;color:var(--muted);font-weight:600;
+  margin-left:2px;font-variant-numeric:tabular-nums}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(326px,1fr));gap:18px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:22px;display:flex;flex-direction:column;gap:13px;
+  transition:border-color .2s,transform .2s,background .2s}
+.card:hover{background:var(--surface-2);border-color:var(--border-strong);transform:translateY(-2px)}
+.card-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.card-num{font-weight:800;color:var(--accent);font-size:14px;background:var(--accent-soft);
+  padding:3px 11px;border-radius:8px;font-variant-numeric:tabular-nums}
+.src-chip{font-size:12px;color:var(--muted);background:var(--bg-2);padding:5px 11px;border-radius:999px;
+  border:1px solid var(--border);max-width:68%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.card-title{font-size:18px;line-height:1.45;font-weight:700;letter-spacing:-.005em}
+.card-title a{color:var(--ink);text-decoration:none;background-image:linear-gradient(var(--accent),var(--accent));
+  background-size:0% 2px;background-position:0 100%;background-repeat:no-repeat;
+  transition:background-size .3s ease,color .2s}
+.card-title a:hover{color:#fff;background-size:100% 2px}
+.card-summary{color:var(--muted);font-size:14px;flex:1}
+.card-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:12px;flex-wrap:wrap}
+.card-time{color:var(--muted-2)}
+.card-link{color:var(--accent);text-decoration:none;font-weight:700;white-space:nowrap;
+  background-image:linear-gradient(var(--accent-line),var(--accent-line));
+  background-size:0% 2px;background-position:0 100%;background-repeat:no-repeat;transition:background-size .28s ease}
+.card-link:hover{background-size:100% 2px}
+
+/* Footer */
+.foot{margin-top:56px;padding:28px 0 8px;border-top:1px solid var(--border);color:var(--muted-2);
+  font-size:13px;text-align:center;line-height:1.7}
+.foot a{color:var(--accent);text-decoration:none}
+.foot a:hover{text-decoration:underline;text-underline-offset:3px}
+
+@media (max-width:980px){.stats{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:620px){
+  .wrap{padding:0 18px}
+  .hero{padding:72px 18px 52px}
+  .stats{grid-template-columns:repeat(2,1fr);gap:10px}
+  .stat-num{font-size:26px}
+  .card-grid{grid-template-columns:1fr;gap:14px}
+  .card{padding:18px}
+  .section-title{font-size:20px}
+  .nav{padding:12px 0}
+  .nav-chip{padding:8px 13px;font-size:13px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
 </style>
+  <meta name="page-type" content="software">
 </head>
 <body>
+  <a class="skip" href="#main">跳到正文</a>
   <header class="hero">
     <div class="kicker">AI HOT · 每日晨报</div>
     <h1>AI 日报仪表盘</h1>
@@ -119,7 +129,7 @@
     <div class="window-label">数据范围：过去 24 小时 · 数据源：AI HOT (aihot.virxact.com)</div>
   </header>
 
-  <div class="wrap">
+  <div class="wrap" id="main">
     <div class="stats">
       <div class="stat-card"><div class="stat-num">4</div><div class="stat-label">模型发布/更新</div></div><div class="stat-card"><div class="stat-num">5</div><div class="stat-label">产品发布/更新</div></div><div class="stat-card"><div class="stat-num">7</div><div class="stat-label">行业动态</div></div><div class="stat-card"><div class="stat-num">5</div><div class="stat-label">论文研究</div></div><div class="stat-card"><div class="stat-num">1</div><div class="stat-label">技巧与观点</div></div>
     </div>
