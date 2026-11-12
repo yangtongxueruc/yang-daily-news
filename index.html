@@ -3,74 +3,52 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="page-type" content="software">
 <title>AI 每日晨报</title>
 <style>
-  :root {
-    --bg: #0f1220; --bg2: #151a2e; --card: #1b2238; --border: #2a3358;
-    --text: #e8ecf6; --muted: #9aa6c4; --accent: #6ea8fe; --accent2: #b07cff;
-    --ok: #57d9a3;
+  :root{
+    --bg:#0e1116; --bg-2:#141821; --surface:#171c26; --surface-2:#1d2430;
+    --border:#283041; --border-strong:#39445c; --ink:#f3f6fc; --muted:#9aa4b6;
+    --muted-2:#6e778c; --accent:#ff8a4c; --accent-2:#ffb37a; --radius:14px;
+    --font:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
   }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { height: 100%; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
-    background: linear-gradient(160deg, var(--bg), var(--bg2));
-    color: var(--text); display: flex; flex-direction: column; height: 100vh; overflow: hidden;
-  }
-  header {
-    display: flex; align-items: center; gap: 14px; padding: 14px 20px;
-    border-bottom: 1px solid var(--border);
-    background: radial-gradient(900px 200px at 0% -50px, rgba(110,168,254,.18), transparent);
-  }
-  .brand { font-weight: 800; font-size: 18px; letter-spacing: .5px;
-    background: linear-gradient(90deg, #fff, var(--accent) 60%, var(--accent2));
-    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-  .brand small { -webkit-text-fill-color: var(--muted); color: var(--muted); font-weight: 500; font-size: 12px; margin-left: 6px; }
-  .viewing { color: var(--muted); font-size: 14px; }
-  .viewing b { color: var(--accent); }
-  .spacer { flex: 1; }
-  button {
-    font: inherit; cursor: pointer; border: 1px solid var(--border); color: var(--text);
-    background: var(--card); padding: 8px 14px; border-radius: 999px; font-size: 13px; transition: .15s;
-  }
-  button:hover { border-color: var(--accent); }
-  button.primary { background: linear-gradient(90deg, var(--accent), var(--accent2)); color: #0b0e1a; border: none; font-weight: 700; }
-
-  .layout { flex: 1; display: flex; min-height: 0; }
-  /* Calendar panel */
-  #calPanel {
-    width: 320px; flex-shrink: 0; border-right: 1px solid var(--border);
-    padding: 16px; overflow-y: auto; transition: margin-left .25s ease;
-  }
-  #calPanel.collapsed { margin-left: -320px; }
-  .cal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
-  .cal-head .mon { font-weight: 800; font-size: 16px; }
-  .cal-nav { display: flex; gap: 6px; }
-  .cal-nav button { padding: 4px 10px; }
-  .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
-  .cal-dow { text-align: center; font-size: 12px; color: var(--muted); padding: 6px 0; }
-  .cal-cell {
-    aspect-ratio: 1 / 1; display: flex; align-items: center; justify-content: center;
-    border-radius: 10px; font-size: 13px; color: var(--muted); border: 1px solid transparent;
-  }
-  .cal-cell.empty { visibility: hidden; }
-  .cal-cell.has {
-    color: var(--text); cursor: pointer; background: var(--card); border-color: var(--border); font-weight: 700;
-  }
-  .cal-cell.has:hover { border-color: var(--accent); transform: translateY(-2px); }
-  .cal-cell.has .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--ok); position: absolute; margin-top: 18px; }
-  .cal-cell.sel { background: linear-gradient(90deg, var(--accent), var(--accent2)); color: #0b0e1a; border: none; }
-  .cal-cell.today { box-shadow: 0 0 0 2px var(--accent2) inset; }
-  .cal-hint { margin-top: 14px; font-size: 12px; color: var(--muted); line-height: 1.5; }
-  .cal-hint a { color: var(--accent); text-decoration: none; }
-
-  /* Report frame */
-  #frame { flex: 1; border: none; width: 100%; height: 100%; background: var(--bg); }
-
-  @media (max-width: 760px) {
-    #calPanel { position: absolute; z-index: 20; background: var(--bg2); height: 100%; box-shadow: 0 0 30px rgba(0,0,0,.5); }
-    #calPanel.collapsed { margin-left: -320px; }
-  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{font-family:var(--font);background:var(--bg);color:var(--ink);display:flex;flex-direction:column;height:100vh;overflow:hidden;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  header{display:flex;align-items:center;gap:14px;padding:14px 20px;border-bottom:1px solid var(--border);background:var(--surface)}
+  .brand{font-weight:800;font-size:18px;letter-spacing:.3px}
+  .brand small{color:var(--muted);font-weight:500;font-size:12px;margin-left:6px}
+  .viewing{color:var(--muted);font-size:14px}
+  .viewing b{color:var(--accent)}
+  .spacer{flex:1}
+  button{font:inherit;cursor:pointer;border:1px solid var(--border);color:var(--ink);background:var(--surface-2);padding:8px 14px;border-radius:999px;font-size:13px;transition:border-color .2s,transform .15s}
+  button:hover{border-color:var(--accent);transform:translateY(-2px)}
+  button:active{transform:translateY(0)}
+  button.primary{background:var(--accent);color:#1c1206;border:none;font-weight:700}
+  button.primary:hover{background:var(--accent-2)}
+  .layout{flex:1;display:flex;min-height:0}
+  #calPanel{width:320px;flex-shrink:0;border-right:1px solid var(--border);padding:16px;overflow-y:auto;transition:margin-left .25s ease;background:var(--bg-2)}
+  #calPanel.collapsed{margin-left:-320px}
+  .cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+  .cal-head .mon{font-weight:800;font-size:16px}
+  .cal-nav{display:flex;gap:6px}
+  .cal-nav button{padding:4px 10px}
+  .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+  .cal-dow{text-align:center;font-size:12px;color:var(--muted);padding:6px 0}
+  .cal-cell{aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;border-radius:10px;font-size:13px;color:var(--muted);border:1px solid transparent;position:relative;transition:border-color .2s,transform .15s,background .2s}
+  .cal-cell.empty{visibility:hidden}
+  .cal-cell.has{color:var(--ink);cursor:pointer;background:var(--surface);border-color:var(--border);font-weight:700}
+  .cal-cell.has:hover{border-color:var(--accent);transform:translateY(-2px)}
+  .cal-cell.has .dot{width:5px;height:5px;border-radius:50%;background:var(--accent);position:absolute;margin-top:18px}
+  .cal-cell.sel{background:var(--accent);color:#1c1206;border:none}
+  .cal-cell.today{box-shadow:0 0 0 2px var(--accent) inset}
+  .cal-hint{margin-top:14px;font-size:12px;color:var(--muted);line-height:1.5}
+  .cal-hint a{color:var(--accent);text-decoration:none}
+  .cal-hint a:hover{text-decoration:underline;text-underline-offset:3px}
+  #frame{flex:1;border:none;width:100%;height:100%;background:var(--bg)}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+  @media (max-width:760px){#calPanel{position:absolute;z-index:20;background:var(--bg-2);height:100%;box-shadow:0 0 30px rgba(0,0,0,.5)}#calPanel.collapsed{margin-left:-320px}}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
 <body>
