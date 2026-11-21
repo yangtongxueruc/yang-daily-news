@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-radius="soft">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="page-type" content="software">
+<meta name="site-kind" content="software">
+<title>AI 日报晨报 · 2026年11月21日</title>
+<style>
+
+:root{
+  --bg:#0e1116; --bg-2:#141821; --surface:#171c26; --surface-2:#1d2430;
+  --border:#283041; --border-strong:#39445c; --ink:#f3f6fc; --muted:#9aa4b6;
+  --muted-2:#6e778c; --accent:#ff8a4c; --accent-2:#ffb37a;
+  --accent-soft:rgba(255,138,76,.14); --accent-line:rgba(255,138,76,.55);
+  --radius:14px; --radius-sm:10px; --maxw:1140px;
+  --font:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--bg);color:var(--ink);line-height:1.62;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+a{color:inherit}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+.skip{position:absolute;left:-9999px;top:auto}
+.skip:focus{left:16px;top:12px;background:var(--accent);color:#1c1206;padding:9px 15px;
+  border-radius:9px;z-index:200;font-weight:700;text-decoration:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+
+/* Hero */
+.hero{position:relative;overflow:hidden;padding:96px 24px 66px;text-align:center;
+  border-bottom:1px solid var(--border)}
+.hero::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(880px 380px at 50% -170px,var(--accent-soft),transparent 70%)}
+.hero .wrap{position:relative}
+.kicker{letter-spacing:.30em;font-size:12px;font-weight:700;color:var(--accent);
+  text-transform:uppercase}
+.hero h1{font-size:clamp(34px,6vw,58px);font-weight:800;letter-spacing:-.02em;
+  margin:16px 0 10px;line-height:1.05}
+.hero .date-line{color:var(--muted);font-size:17px}
+.total-badge{display:inline-block;margin-top:24px;padding:13px 28px;border-radius:999px;
+  background:var(--surface-2);border:1px solid var(--border-strong);font-weight:800;font-size:18px}
+.total-badge b{color:var(--accent)}
+.window-label{margin-top:16px;color:var(--muted-2);font-size:13px}
+.hero .kicker,.hero h1,.hero .date-line,.hero .total-badge,.hero .window-label{
+  animation:rise .7s cubic-bezier(.2,.7,.2,1) both}
+.hero h1{animation-delay:.05s}.hero .date-line{animation-delay:.11s}
+.hero .total-badge{animation-delay:.17s}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+/* Stats */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:36px 0 6px}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:20px 12px;text-align:center;transition:border-color .2s,transform .2s}
+.stat-card:hover{border-color:var(--border-strong);transform:translateY(-2px)}
+.stat-num{font-size:30px;font-weight:800;color:var(--accent);letter-spacing:-.01em}
+.stat-label{font-size:13px;color:var(--muted);margin-top:6px;line-height:1.35}
+
+/* Nav */
+.nav{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;position:sticky;top:0;z-index:30;
+  padding:14px 0;margin-top:28px;background:rgba(14,17,22,.74);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border)}
+.nav-chip{display:inline-flex;align-items:center;gap:8px;text-decoration:none;background:var(--surface);
+  color:var(--ink);border:1px solid var(--border);padding:9px 15px;border-radius:999px;font-size:14px;
+  transition:border-color .2s,transform .15s,color .2s}
+.nav-chip:hover{border-color:var(--accent);transform:translateY(-2px);color:#fff}
+.nav-chip:active{transform:translateY(0)}
+.nav-dot{width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.nav-chip b{color:var(--accent);font-variant-numeric:tabular-nums}
+
+/* Sections */
+.section{margin:48px 0;scroll-margin-top:82px}
+.section-title{display:flex;align-items:center;gap:12px;font-size:23px;font-weight:800;margin-bottom:22px;
+  letter-spacing:-.01em}
+.section-bar{width:6px;height:25px;border-radius:4px;background:var(--accent)}
+.section-count{font-size:14px;color:var(--muted);font-weight:600;
+  margin-left:2px;font-variant-numeric:tabular-nums}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(326px,1fr));gap:18px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:22px;display:flex;flex-direction:column;gap:13px;
+  transition:border-color .2s,transform .2s,background .2s}
+.card:hover{background:var(--surface-2);border-color:var(--border-strong);transform:translateY(-2px)}
+.card-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.card-num{font-weight:800;color:var(--accent);font-size:14px;background:var(--accent-soft);
+  padding:3px 11px;border-radius:8px;font-variant-numeric:tabular-nums}
+.src-chip{font-size:12px;color:var(--muted);background:var(--bg-2);padding:5px 11px;border-radius:999px;
+  border:1px solid var(--border);max-width:68%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.card-title{font-size:18px;line-height:1.45;font-weight:700;letter-spacing:-.005em}
+.card-title a{color:var(--ink);text-decoration:none;background-image:linear-gradient(var(--accent),var(--accent));
+  background-size:0% 2px;background-position:0 100%;background-repeat:no-repeat;
+  transition:background-size .3s ease,color .2s}
+.card-title a:hover{color:#fff;background-size:100% 2px}
+.card-summary{color:var(--muted);font-size:14px;flex:1}
+.card-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:12px;flex-wrap:wrap}
+.card-time{color:var(--muted-2)}
+.card-link{color:var(--accent);text-decoration:none;font-weight:700;white-space:nowrap;
+  background-image:linear-gradient(var(--accent-line),var(--accent-line));
+  background-size:0% 2px;background-position:0 100%;background-repeat:no-repeat;transition:background-size .28s ease}
+.card-link:hover{background-size:100% 2px}
+
+/* Footer */
+.foot{margin-top:56px;padding:28px 0 8px;border-top:1px solid var(--border);color:var(--muted-2);
+  font-size:13px;text-align:center;line-height:1.7}
+.foot a{color:var(--accent);text-decoration:none}
+.foot a:hover{text-decoration:underline;text-underline-offset:3px}
+
+@media (max-width:980px){.stats{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:620px){
+  .wrap{padding:0 18px}
+  .hero{padding:72px 18px 52px}
+  .stats{grid-template-columns:repeat(2,1fr);gap:10px}
+  .stat-num{font-size:26px}
+  .card-grid{grid-template-columns:1fr;gap:14px}
+  .card{padding:18px}
+  .section-title{font-size:20px}
+  .nav{padding:12px 0}
+  .nav-chip{padding:8px 13px;font-size:13px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+
+</style>
+</head>
+<body>
+  <a class="skip" href="#main">跳到正文</a>
+  <header class="hero">
+    <div class="wrap">
+      <div class="kicker">AI HOT · 每日晨报</div>
+      <h1>AI 日报仪表盘</h1>
+      <div class="date-line">2026年11月21日 · 星期六</div>
+      <div class="total-badge">今日共 <b>18</b> 条</div>
+      <div class="window-label">数据范围：过去 24 小时 · 数据源 AI HOT (aihot.virxact.com)</div>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <nav class="nav" aria-label="版块导航">
+      <a class="nav-chip" href="#sec-0"><span class="nav-dot" aria-hidden="true"></span>模型发布/更新<b>2</b></a><a class="nav-chip" href="#sec-1"><span class="nav-dot" aria-hidden="true"></span>产品发布/更新<b>4</b></a><a class="nav-chip" href="#sec-2"><span class="nav-dot" aria-hidden="true"></span>行业动态<b>1</b></a><a class="nav-chip" href="#sec-3"><span class="nav-dot" aria-hidden="true"></span>论文研究<b>3</b></a><a class="nav-chip" href="#sec-4"><span class="nav-dot" aria-hidden="true"></span>技巧与观点<b>3</b></a><a class="nav-chip" href="#sec-5"><span class="nav-dot" aria-hidden="true"></span>🚗 自动驾驶<b>5</b></a>
+    </nav>
+
+    <div class="stats" role="list">
+      <div class="stat-card"><div class="stat-num">2</div><div class="stat-label">模型发布/更新</div></div><div class="stat-card"><div class="stat-num">4</div><div class="stat-label">产品发布/更新</div></div><div class="stat-card"><div class="stat-num">1</div><div class="stat-label">行业动态</div></div><div class="stat-card"><div class="stat-num">3</div><div class="stat-label">论文研究</div></div><div class="stat-card"><div class="stat-num">3</div><div class="stat-label">技巧与观点</div></div><div class="stat-card"><div class="stat-num">5</div><div class="stat-label">🚗 自动驾驶</div></div>
+    </div>
+
+    <main id="main">
+    <section class="section" id="sec-0">
+  <h2 class="section-title"><span class="section-bar" aria-hidden="true"></span>模型发布/更新 <span class="section-count">2</span></h2>
+  <div class="card-grid"><article class="card">
+  <div class="card-head">
+    <span class="card-num">#1</span>
+    <span class="src-chip">Thinking Machines Lab：News（网页）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/y7nk77dxae51qwi826gpmvbho" target="_blank" rel="noopener noreferrer">Thinking Machines Lab 发布可跑在笔记本上的开源权重模型 Inkling 2 Mini</a></h3>
+  <p class="card-summary">Thinking Machines Lab 发布开源权重模型 Inkling 2 Mini，采用循环 Transformer 架构，将中间 12 层每 token 运行三次，总参数…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年11月20日 15:00</span>
+    <a class="card-link" href="https://aihot.news/items/y7nk77dxae51qwi826gpmvbho" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#2</span>
+    <span class="src-chip">X：腾讯混元 (@TencentHunyuan)</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/jl6m0eymz9z0kleh54c3guowx" target="_blank" rel="noopener noreferrer">腾讯混元开放 Hy4 权重</a></h3>
+  <p class="card-summary">腾讯混元发布 Hy4 开放权重，定位原生多模态旗舰 MoE 模型，总参数 770B、激活 49B，支持 1M 上下文。同步发布含安全评估报告的…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年11月20日 11:52</span>
+    <a class="card-link" href="https://aihot.news/items/jl6m0eymz9z0kleh54c3guowx" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article></div>
+</section><section class="section" id="sec-1">
+  <h2 class="section-title"><span class="section-bar" aria-hidden="true"></span>产品发布/更新 <span class="section-count">4</span></h2>
+  <div class="card-grid"><article class="card">
+  <div class="card-head">
+    <span class="card-num">#3</span>
+    <span class="src-chip">Google Research：Blog（网页）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/t68rgyv46hdbp52212ozxleh3" target="_blank" rel="noopener noreferrer">Google 回顾 Duplex 十年演进：如何在 Gemini Tasks 中替用户打电话给商家</a></h3>
+  <p class="card-summary">Google Research 回顾 Duplex 十年架构演进，并介绍本周在 Gemini App Tasks 中上线的自动致电商家功能。</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年11月20日 08:00</span>
+    <a class="card-link" href="https://aihot.news/items/t68rgyv46hdbp52212ozxleh3" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#4</span>
+    <span class="src-chip">Browser Use</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/wibzzhd168cafn7o3gl8336di" target="_blank" rel="noopener noreferrer">browser-use 1.0 发布：用一个 Python REPL 工具替代 24 个浏览器动作</a></h3>
+  <p class="card-summary">Browser Use 发布 browser-use 1.0，用单一 python 持久 REPL 加原生 Chrome DevTools Protocol 访问替代 0.x 的 24 个浏览器动作…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年11月20日 08:00</span>
+    <a class="card-link" href="https://aihot.news/items/wibzzhd168cafn7o3gl8336di" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#5</span>
+    <span class="src-chip">X：ChatGPT (@ChatGPT)</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/ekf0so0xitc52thkrxx3mwax1" target="_blank" rel="noopener noreferrer">ChatGPT 推出 Space：统一管理页面、幻灯片、图片与文件</a></h3>
+  <p class="card-summary">ChatGPT 官方宣布侧边栏中的 Space 成为 pages、slides、images、files 和 uploads 的新家。用 ChatGPT 可写页面、做研究、生成图…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年11月21日 02:48</span>
+    <a class="card-link" href="https://aihot.news/items/ekf0so0xitc52thkrxx3mwax1" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#6</span>
+    <span class="src-chip">Conductor 官方更新</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/stnka187ae3za2qnx70vqheg7" target="_blank" rel="noopener noreferrer">Conductor 0.97.0 发布并宣布加入 Meta，本地工作区智能体新增 artifacts</a></h3>
+  <p class="card-summary">Conductor 发布 0.97.0 更新，同时宣布 Conductor 加入 Meta。本地工作区的 Agent 现在可以生成 artifacts，即能在聊天中内联显示…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年11月19日 08:00</span>
+    <a class="card-link" href="https://aihot.news/items/stnka187ae3za2qnx70vqheg7" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article></div>
+</section><section class="section" id="sec-2">
+  <h2 class="section-title"><span class="section-bar" aria-hidden="true"></span>行业动态 <span class="section-count">1</span></h2>
+  <div class="card-grid"><article class="card">
+  <div class="card-head">
+    <span class="card-num">#7</span>
+    <span class="src-chip">Hacker News：AI 热帖</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/ufyn252g3i251j0mfwy8xth9r" target="_blank" rel="noopener noreferrer">Anthropic 破纪录 IPO 未能止住 AI 抛售，全球股市下挫</a></h3>
+  <p class="card-summary">Anthropic 上市第二天股价跌逾 9% 至 $88.17，接近 $83 发行价，其破纪录 IPO 未能止住 AI 相关公司抛售。周五 Nasdaq 跌 2%，Sa…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年11月20日 21:53</span>
+    <a class="card-link" href="https://aihot.news/items/ufyn252g3i251j0mfwy8xth9r" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article></div>
+</section><section class="section" id="sec-3">
+  <h2 class="section-title"><span class="section-bar" aria-hidden="true"></span>论文研究 <span class="section-count">3</span></h2>
+  <div class="card-grid"><article class="card">
+  <div class="card-head">
+    <span class="card-num">#8</span>
+    <span class="src-chip">METR：Research（网页）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/sn8qb9u8fqka3mpnmy0r1nz4b" target="_blank" rel="noopener noreferrer">METR 发布 2026 年 11 月能力测量更新：AI R&amp;D 相关能力每约 3.6 个月翻倍且更难测量</a></h3>
+  <p class="card-summary">METR 发布截至 Opus 5.5 和 GPT-6 Astra 的能力评测更新，发现在 TH1.1 与 TH2 任务上模型时间视野约每 3.6 个月翻倍，可验证子集…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年11月20日 00:00</span>
+    <a class="card-link" href="https://aihot.news/items/sn8qb9u8fqka3mpnmy0r1nz4b" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#9</span>
+    <span class="src-chip">公众号：数字生命卡兹克</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/vu6fw8wmrs3xcln4u9gwzf1f4" target="_blank" rel="noopener noreferrer">Anthropic 数学家 Levent Alpöge 宣布与 Claude 合作证明黎曼猜想，放出 1737 万行 Lean 代码</a></h3>
+  <p class="card-summary">Anthropic 数学家 Levent Alpöge 在个人网站宣布与 Claude 合作证明了黎曼猜想，没有论文，只放出 14 个压缩包共 175187 个 Lean…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年11月21日 00:54</span>
+    <a class="card-link" href="https://aihot.news/items/vu6fw8wmrs3xcln4u9gwzf1f4" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#10</span>
+    <span class="src-chip">MiniMax：Blog（网页）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/sakj36g0tvzaeoianryyn6o6g" target="_blank" rel="noopener noreferrer">MiniMax 内部模型 MIM 实现多项密码分析实用攻击并开源验证轨迹</a></h3>
+  <p class="card-summary">MiniMax 研究团队用内部研究模型 MIM 对现代密码方案做自动化密码分析，报告称在 NIST 候选算法、同行评审方案和公开挑战基准上取…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年11月20日 14:41</span>
+    <a class="card-link" href="https://aihot.news/items/sakj36g0tvzaeoianryyn6o6g" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article></div>
+</section><section class="section" id="sec-4">
+  <h2 class="section-title"><span class="section-bar" aria-hidden="true"></span>技巧与观点 <span class="section-count">3</span></h2>
+  <div class="card-grid"><article class="card">
+  <div class="card-head">
+    <span class="card-num">#11</span>
+    <span class="src-chip">Figma AI / Agent / Make</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/w612ivonntodntv1ydkt2lqwh" target="_blank" rel="noopener noreferrer">Figma 演示用 Specs 与 Figma agent 把上下文变成可实现的开发计划</a></h3>
+  <p class="card-summary">Figma 在 Workflow lab 中演示一个完整工作流：工程师用 Specs 在画布上汇集 PRD、Hex 数据、FigJam 图、标注设计和组件说明，再…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年11月21日 06:17</span>
+    <a class="card-link" href="https://aihot.news/items/w612ivonntodntv1ydkt2lqwh" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#12</span>
+    <span class="src-chip">OpenHands 官方博客</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/i94tul4bae051uizh2kkpn2r4" target="_blank" rel="noopener noreferrer">OpenHands 详解用 Agent 自动修复自家镜像 CVE 的软件工厂</a></h3>
+  <p class="card-summary">OpenHands 团队详解把大部分 CVE 修复工作交给 Agent 流水线的做法：Agent 选择修复、开 PR、合并低风险项并跟踪到部署，人每天只…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年11月19日 08:00</span>
+    <a class="card-link" href="https://aihot.news/items/i94tul4bae051uizh2kkpn2r4" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#13</span>
+    <span class="src-chip">Runway：News（网页）</span>
+  </div>
+  <h3 class="card-title"><a href="https://aihot.news/items/wnw22hxqlwsd58lzsm44psc6g" target="_blank" rel="noopener noreferrer">Runway 详解如何构建智能体驱动的软件工厂</a></h3>
+  <p class="card-summary">Runway 介绍了逐步把软件交付各环节交给智能体完成的实践。智能体 10 月驱动了 38% 的合并 PR（6 月仅 0.1%），首次批准等待中位…</p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年11月20日 00:00</span>
+    <a class="card-link" href="https://aihot.news/items/wnw22hxqlwsd58lzsm44psc6g" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article></div>
+</section><section class="section" id="sec-5">
+  <h2 class="section-title"><span class="section-bar" aria-hidden="true"></span>🚗 自动驾驶 <span class="section-count">5</span></h2>
+  <div class="card-grid"><article class="card">
+  <div class="card-head">
+    <span class="card-num">#14</span>
+    <span class="src-chip">The Star（路透社）</span>
+  </div>
+  <h3 class="card-title"><a href="https://www.thestar.com.my/tech/tech-news/2026/11/21/waymo-recalls-self-driving-cars-over-closed-freeway-lanes-manual-traffic-control" target="_blank" rel="noopener noreferrer">Waymo 因封闭高速车道与人工指挥响应问题备案两项软件召回，涉及约 3871 辆 Robotaxi</a></h3>
+  <p class="card-summary"></p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年11月21日（自动驾驶）</span>
+    <a class="card-link" href="https://www.thestar.com.my/tech/tech-news/2026/11/21/waymo-recalls-self-driving-cars-over-closed-freeway-lanes-manual-traffic-control" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#15</span>
+    <span class="src-chip">澎湃新闻</span>
+  </div>
+  <h3 class="card-title"><a href="https://www.thepaper.cn/newsDetail_forward_34522776" target="_blank" rel="noopener noreferrer">文远知行三季度 Robotaxi 收入首破亿元、同比增 204%，广州车队单车经济效益转正</a></h3>
+  <p class="card-summary"></p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年11月20日（自动驾驶）</span>
+    <a class="card-link" href="https://www.thepaper.cn/newsDetail_forward_34522776" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#16</span>
+    <span class="src-chip">中国新闻网上海</span>
+  </div>
+  <h3 class="card-title"><a href="https://www.sh.chinanews.com.cn/chanjing/2026-11-20/151379.shtml" target="_blank" rel="noopener noreferrer">上海金桥首个智慧产业园自动驾驶 Robotaxi 站点揭牌，依托小马智行全栈技术</a></h3>
+  <p class="card-summary"></p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年11月20日（自动驾驶）</span>
+    <a class="card-link" href="https://www.sh.chinanews.com.cn/chanjing/2026-11-20/151379.shtml" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#17</span>
+    <span class="src-chip">搜狐网</span>
+  </div>
+  <h3 class="card-title"><a href="https://www.sohu.com/a/1104312895_362225" target="_blank" rel="noopener noreferrer">特斯拉 Cybercab 待交付：航拍显示车顶方形组件，或为星链天线集成位</a></h3>
+  <p class="card-summary"></p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年11月20日（自动驾驶）</span>
+    <a class="card-link" href="https://www.sohu.com/a/1104312895_362225" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article><article class="card">
+  <div class="card-head">
+    <span class="card-num">#18</span>
+    <span class="src-chip">东方财富财富号</span>
+  </div>
+  <h3 class="card-title"><a href="https://caifuhao.eastmoney.com/news/20261120214626454743820" target="_blank" rel="noopener noreferrer">工信部公示智能网联汽车直连通信安全预警系统等两项推荐性国标报批稿</a></h3>
+  <p class="card-summary"></p>
+  <div class="card-foot">
+    <span class="card-time">🕒 2026年11月20日（自动驾驶）</span>
+    <a class="card-link" href="https://caifuhao.eastmoney.com/news/20261120214626454743820" target="_blank" rel="noopener noreferrer">阅读原文 →</a>
+  </div>
+</article></div>
+</section>
+    </main>
+
+    <footer class="foot">
+      <p>总条数：18 条 ｜ 数据来源：AI HOT（2026-11-21 日报，公开 v1 API）；自动驾驶版块为 WebSearch 抓取的真实新闻</p>
+      <p>由 WorkBuddy 自动生成 · 内容版权归原作者所有 · 摘要经 AI 整理，详见<a href="https://aihot.virxact.com/daily/2026-11-21" target="_blank" rel="noopener noreferrer">原文</a></p>
+    </footer>
+  </div>
+</body>
+</html>
